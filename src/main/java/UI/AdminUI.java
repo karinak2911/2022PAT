@@ -5,6 +5,7 @@ import backend.StudentArray;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -23,6 +24,7 @@ public class AdminUI extends javax.swing.JFrame {
     public AdminUI() {
         initComponents();
         DOBdatePicker.setDateToToday();
+       
     }
 
     /**
@@ -36,6 +38,7 @@ public class AdminUI extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         soldButtonGroup = new javax.swing.ButtonGroup();
+        confirmationSlipButtonGroup = new javax.swing.ButtonGroup();
         manageMenuPan = new javax.swing.JTabbedPane();
         manageMenuPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -86,7 +89,9 @@ public class AdminUI extends javax.swing.JFrame {
         IDtextField = new javax.swing.JTextField();
         errorMsgLabel = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        DOBdatePicker = new com.github.lgooddatepicker.components.DatePicker();
+        jLabel21 = new javax.swing.JLabel();
+        yesradioButton = new javax.swing.JRadioButton();
+        noRadioButton = new javax.swing.JRadioButton();
         viewSalesPanel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -217,7 +222,7 @@ public class AdminUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
                                 .addGroup(manageMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel11)
-                                    .addComponent(itempricetextField, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)))
+                                    .addComponent(itempricetextField, javax.swing.GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)))
                             .addGroup(manageMenuPanelLayout.createSequentialGroup()
                                 .addGroup(manageMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(itemNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -443,11 +448,19 @@ public class AdminUI extends javax.swing.JFrame {
 
         jLabel22.setText("Date of birth:");
 
-        DOBdatePicker.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                DOBdatePickerPropertyChange(evt);
+        jLabel21.setText("Print confirmation slip: ");
+
+        confirmationSlipButtonGroup.add(yesradioButton);
+        yesradioButton.setSelected(true);
+        yesradioButton.setText("Yes");
+        yesradioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yesradioButtonActionPerformed(evt);
             }
         });
+
+        confirmationSlipButtonGroup.add(noRadioButton);
+        noRadioButton.setText("No");
 
         javax.swing.GroupLayout manageStudenstPanelLayout = new javax.swing.GroupLayout(manageStudenstPanel);
         manageStudenstPanel.setLayout(manageStudenstPanelLayout);
@@ -462,15 +475,8 @@ public class AdminUI extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(manageStudenstPanelLayout.createSequentialGroup()
-                                .addGroup(manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(errorMsgLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(manageStudenstPanelLayout.createSequentialGroup()
-                                        .addComponent(addStudentButton)
-                                        .addGap(71, 71, 71)
-                                        .addComponent(deleteStudentButton)
-                                        .addGap(120, 120, 120)
-                                        .addComponent(editStudentButton)))
-                                .addGap(31, 31, 31))
+                                .addComponent(errorMsgLabel)
+                                .addGap(647, 647, 647))
                             .addGroup(manageStudenstPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -479,10 +485,7 @@ public class AdminUI extends javax.swing.JFrame {
                                     .addComponent(gradeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(52, 52, 52)
                                 .addGroup(manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(manageStudenstPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel22)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(DOBdatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel22)
                                     .addGroup(manageStudenstPanelLayout.createSequentialGroup()
                                         .addGroup(manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jLabel4)
@@ -491,7 +494,7 @@ public class AdminUI extends javax.swing.JFrame {
                                         .addGroup(manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(surnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(classComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
             .addGroup(manageStudenstPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -510,8 +513,20 @@ public class AdminUI extends javax.swing.JFrame {
                             .addGroup(manageStudenstPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel20)
                                 .addGap(18, 18, 18)
-                                .addComponent(IDtextField, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 393, Short.MAX_VALUE))))
+                                .addComponent(IDtextField, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(manageStudenstPanelLayout.createSequentialGroup()
+                                .addComponent(addStudentButton)
+                                .addGap(69, 69, 69)
+                                .addComponent(deleteStudentButton)
+                                .addGap(97, 97, 97)
+                                .addComponent(editStudentButton))
+                            .addGroup(manageStudenstPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addGap(18, 18, 18)
+                                .addComponent(yesradioButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(noRadioButton)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         manageStudenstPanelLayout.setVerticalGroup(
             manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -538,16 +553,21 @@ public class AdminUI extends javax.swing.JFrame {
                 .addGroup(manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
                     .addComponent(IDtextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22)
-                    .addComponent(DOBdatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                    .addComponent(jLabel22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addStudentButton)
-                    .addComponent(deleteStudentButton)
-                    .addComponent(editStudentButton))
+                    .addComponent(jLabel21)
+                    .addComponent(yesradioButton)
+                    .addComponent(noRadioButton))
                 .addGap(37, 37, 37)
                 .addComponent(errorMsgLabel)
-                .addGap(47, 47, 47))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addStudentButton)
+                    .addGroup(manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(deleteStudentButton)
+                        .addComponent(editStudentButton)))
+                .addGap(29, 29, 29))
         );
 
         manageMenuPan.addTab("Manage Students", manageStudenstPanel);
@@ -812,6 +832,14 @@ public class AdminUI extends javax.swing.JFrame {
          
          else {
              grade = Integer.parseInt(gradeStr); 
+             JOptionPane.showMessageDialog(null, "Student successfully added");
+             firstNameTextField.setText("");
+             surnameTextField.setText("");
+             IDtextField.setText("");
+             gradeComboBox.setSelectedIndex(0);
+             DOBdatePicker.setDateToToday();
+             classComboBox.setSelectedIndex(0);
+             
              //s.addStudent(idNumber, firstName, surname, sClass, grade, dob);
          } 
     }//GEN-LAST:event_addStudentButtonActionPerformed
@@ -839,6 +867,10 @@ public class AdminUI extends javax.swing.JFrame {
         errorMsgLabel.setText("");
         
     }//GEN-LAST:event_DOBdatePickerPropertyChange
+
+    private void yesradioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesradioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_yesradioButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -877,7 +909,6 @@ public class AdminUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.github.lgooddatepicker.components.DatePicker DOBdatePicker;
     private javax.swing.JPanel FAQsPanel;
     private javax.swing.JTextField IDtextField;
     private javax.swing.JCheckBox SaladCheckBox;
@@ -886,6 +917,7 @@ public class AdminUI extends javax.swing.JFrame {
     private javax.swing.JButton addWaiterButton;
     private javax.swing.JCheckBox allCheckbox;
     private javax.swing.JComboBox<String> classComboBox;
+    private javax.swing.ButtonGroup confirmationSlipButtonGroup;
     private javax.swing.JButton deleteItemButton;
     private javax.swing.JButton deleteStudentButton;
     private javax.swing.JButton deleteWaiterButton;
@@ -913,6 +945,7 @@ public class AdminUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -934,6 +967,7 @@ public class AdminUI extends javax.swing.JFrame {
     private javax.swing.JPanel manageWorkersPanel;
     private javax.swing.JTable menuTable;
     private javax.swing.JRadioButton mostSoldradioButton;
+    private javax.swing.JRadioButton noRadioButton;
     private javax.swing.JTable ordersTable;
     private javax.swing.JTextField passwordTextField;
     private javax.swing.JTable salesTable;
@@ -950,5 +984,6 @@ public class AdminUI extends javax.swing.JFrame {
     private javax.swing.JTextField waiterUsernameTextField;
     private javax.swing.JTable workersTable;
     private javax.swing.JCheckBox wrapCheckBox;
+    private javax.swing.JRadioButton yesradioButton;
     // End of variables declaration//GEN-END:variables
 }
