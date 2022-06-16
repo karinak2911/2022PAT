@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package backend;
+package objects;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -86,6 +86,10 @@ public class Student {
             }
         }
         return true;
+    }
+
+    public LocalDate getDob() {
+        return dob;
     }
     
     private static boolean hasLettersOnly(String idNumber){
