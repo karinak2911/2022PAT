@@ -4,15 +4,16 @@
  */
 package utils;
 
+import java.sql.SQLException;
+import managers.TypeManager;
+
 /**
  *
  * @author Karinak
  */
 public class TestSoIDoNotShootTheComp {
-    public static void main(String[] args) {
-        String  firstname = "s"; 
-        String type = "t"; 
-        double price = 9.0; 
-        //System.out.println( "INSERT INTO cutos.studentstbl (`firstName`, surname, grade, `Class`, `IDNumber`, dob) VALUES ('" + firstname + "'," + surname + "," + grade + ",'" + sClass  + ",'" + idNumber + "','" + dob + "');"); 
+    public static void main(String[] args) throws SQLException {
+        System.out.println("\"SELECT `typeId` FROM typetbl WHERE `typeName` = '" + 7 + "';\"");
+        
     }
 }

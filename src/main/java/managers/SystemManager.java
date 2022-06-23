@@ -20,6 +20,7 @@ public class SystemManager {
         public static UserManager um; 
         public static OrdersManager om; 
         public static OrderedItemManager otm; 
+         public static TypeManager tm; 
         
       public SystemManager(){   try {
 			db = new DB();
@@ -34,6 +35,8 @@ public class SystemManager {
                          System.out.println("SM: orders initialised");
                          otm = new OrderedItemManager(); 
                           System.out.println("SM: order items  initialised");
+                          tm = new TypeManager(); 
+                            System.out.println("SM: type items  initialised");
                          
                        
 		} catch (ClassNotFoundException ex) {

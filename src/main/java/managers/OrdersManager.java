@@ -4,10 +4,29 @@
  */
 package managers;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import objects.Order;
+
 /**
  *
  * @author Karinak
  */
 public class OrdersManager {
+    
+    Order[] ordersARR = new Order[200]; 
+    int size = 0; 
+
+    public OrdersManager() throws SQLException {
+          String query = "SELECT * FROM orderstbl;"; 
+         ResultSet rs = SystemManager.db.query(query); 
+         while(rs.next()){ 
+             int orderId = rs.
+         }
+        
+        
+    }
+    
+    
     
 }

@@ -6,6 +6,10 @@ package managers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 import objects.MenuItem;
 import utils.DB;
 
@@ -13,7 +17,9 @@ import utils.DB;
  *
  * @author Karinak
  */
-public class MenuManager {
+//a list of method headers that i need to implement 
+
+public class MenuManager implements TableModel{
     MenuItem[] menuArr = new MenuItem[200]; 
     int size = 0; 
     
@@ -36,21 +42,23 @@ public class MenuManager {
         }
     
     }
-       public Object[][] getMenuForTable() {
-
-        Object[][] out = new Object[size][3];
-
-        for (int row = 0; row < size; row++) {
-
-            out[row][0] = menuArr[row].getItemName();
-            out[row][1] = menuArr[row].getItemType();
-            out[row][2] = new Double(menuArr[row].getPrice());
-        }
-        return out;
-    }
+//       public Object[][] getMenuForTable() {
+//
+//        Object[][] out = new Object[size][3];
+//
+//        for (int row = 0; row < size; row++) {
+//
+//            out[row][0] = menuArr[row].getItemName();
+//            out[row][1] = menuArr[row].getItemType();
+//            out[row][2] = new Double(menuArr[row].getPrice());
+//        }
+//        return out;
+//    }
 
     public void add(String name, String type, double price) throws SQLException{
-        ResultSet rs = SystemManager.db.query("SELECT `typeId` FROM typetbl WHERE `typeName` = '" + type + "';");
+        String query2 = "SELECT `typeId` FROM typetbl WHERE `typeName` = '" + type + "';"; 
+        ResultSet rs = SystemManager.db.query(query2);
+        System.out.println(query2);
         int typeID = 0; 
         rs.next();
          typeID = rs.getInt(1);
@@ -65,25 +73,18 @@ public class MenuManager {
         
     }
     
-    public void remove(String name, String type) throws SQLException{ 
-        ResultSet rs =  SystemManager.db.query("SELECT `typeId` FROM typetbl WHERE `typeName` = '" + type + "';");
-        int typeID = 0; 
-        rs.next(); 
-        typeID = rs.getInt(1); 
-        
-        String query = "DELETE FROM cutos.menuitemtbl WHERE `itemName` = '" + name + "' AND `typeID` = " + typeID;
+    public void remove(int row) throws SQLException{ 
+        String query = "DELETE FROM cutos.menuitemtbl WHERE `itemID` = " + menuArr[row].getMenuItemID();
         SystemManager.db.update(query);
-          for (int i = 0; i < size; i++) {
-            if (menuArr[i].getItemName().equalsIgnoreCase(name) && menuArr[i].getItemType().equalsIgnoreCase(type)) {
-                this.shiftLeft(i);
-            }
+                this.shiftLeft(row);
+              
     }
     
           
 
     
     
-}
+
           
     private void shiftLeft(int index) {
         for (int i = index; i < size; i++) {
@@ -91,3 +92,115 @@ public class MenuManager {
         }
         size--;
     }
+    
+    
+    
+    
+    
+
+    @Override
+    public int getRowCount() {
+        return size;
+    }
+
+    @Override
+    public int getColumnCount() {
+        return 4;
+    }
+
+    @Override
+    public String getColumnName(int columnIndex) {
+        String name ="";
+        switch(columnIndex){
+            case 0 -> name = "ID";
+            case 1 -> name = "Name";
+            case 2 -> name = "Type";
+            case 3 -> name = "Price";
+            
+        }
+        
+        return name;
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        Class<?> temp =getClass();
+        try {
+            switch(columnIndex){
+                case 0 -> temp = Class.forName("java.lang.Integer");
+                case 1 -> temp = Class.forName("java.lang.String");
+                case 2 -> temp = Class.forName("java.lang.String");
+                case 3 -> temp = Class.forName("java.lang.Double");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MenuManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return temp;
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+       if(columnIndex == 0)
+           return false; 
+       else 
+           return true; 
+           
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        Object out = new Object();
+        switch(columnIndex){
+            case 0 -> out = menuArr[rowIndex].getMenuItemID();
+            case 1 -> out = menuArr[rowIndex].getItemName();
+            case 2 -> out = menuArr[rowIndex].getItemType();
+            case 3 -> out = menuArr[rowIndex].getPrice();
+            
+        }
+        
+        return out;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        String query = "UPDATE menuitemtbl SET "; 
+        MenuItem m = menuArr[rowIndex]; 
+        switch(columnIndex){
+            case 1: 
+                menuArr[rowIndex].setItemName((String)aValue);
+                query += "`itemName` = '" + ((String)aValue) + "' WHERE `itemID` = " + m.getMenuItemID()+ ";"; 
+                System.out.println(query);
+                break; 
+               
+              
+            case 2: 
+                menuArr[rowIndex].setItemType((String)aValue);
+               query += "`typeID`= (SELECT `typeID` FROM typetbl WHERE `typeName` = '" + ((String)aValue) +  "') WHERE `itemID` = " + m.getMenuItemID()+ ";"; 
+               System.out.println(query); 
+               break;
+            case 3 : 
+                menuArr[rowIndex].setPrice(((Double) aValue).doubleValue());
+                query += "`itemPrice` = " + (((Double) aValue).doubleValue()) + " WHERE `typeID` = " + m.getMenuItemID()+ ";"; 
+                System.out.println(query); 
+                break;
+                //redo
+            
+        }
+         try {
+                   SystemManager.db.update(query); 
+                           } catch (SQLException ex) {
+                   Logger.getLogger(StudentManager.class.getName()).log(Level.SEVERE, null, ex);
+               }
+        
+    }
+
+    @Override
+    public void addTableModelListener(TableModelListener l) {
+        
+    }
+
+    @Override
+    public void removeTableModelListener(TableModelListener l) {
+        
+    }
+} 

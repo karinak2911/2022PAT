@@ -14,6 +14,9 @@ public class MenuItem {
     private String itemType; 
     private double price; 
 
+    public MenuItem() {
+    }
+
     public MenuItem(int menuItemID, String itemName, String itemType, double price) {
         this.menuItemID = menuItemID;
         this.itemName = itemName;

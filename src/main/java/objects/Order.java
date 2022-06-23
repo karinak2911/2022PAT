@@ -10,10 +10,22 @@ package objects;
  */
 public class Order {
     private int orderID; 
-    private int studentID; 
+    private String studentName; 
     private double price; 
-    private User user; 
     private String paymentMeothod; 
+    private User user; 
+   
+
+    public Order(int orderID, String studentName, double price,String paymentMeothod ,User user ) {
+        this.orderID = orderID;
+        this.studentName = studentName;
+        this.price = price;
+        this.user = user;
+        this.paymentMeothod = paymentMeothod;
+    }
+    
+    
+    
 
     public int getOrderID() {
         return orderID;
@@ -23,13 +35,14 @@ public class Order {
         this.orderID = orderID;
     }
 
-    public int getStudentID() {
-        return studentID;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setStudentID(int studentID) {
-        this.studentID = studentID;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
+
 
     public double getPrice() {
         return price;

@@ -14,6 +14,7 @@ import java.util.Date;
  * @author Karinak
  */
 public class Student {
+    private int studentID; 
     private String firstname; 
     private String surname; 
     private String idNumber; 
@@ -21,13 +22,22 @@ public class Student {
     private int grade; 
     private LocalDate dob; 
 
-    public Student(String firstname, String surname, String idNumber, String sClass, int grade, LocalDate dob) {
+    public Student(int studentID,String firstname, String surname, String idNumber, String sClass, int grade, LocalDate dob) {
+        this.studentID = studentID; 
         this.firstname = firstname;
         this.surname = surname;
         this.idNumber = idNumber;
         this.sClass = sClass;
         this.grade = grade;
         this.dob = dob; 
+    }
+
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
     }
 
     public String getFirstname() {
@@ -148,6 +158,12 @@ public class Student {
      public int compareTo(String name) {
         return this.surname.compareToIgnoreCase(name);
     }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+     
+     
      
      
 
