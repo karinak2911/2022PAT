@@ -5,6 +5,7 @@
 package utils;
 
 import java.sql.SQLException;
+import managers.OrdersManager;
 import managers.TypeManager;
 
 /**
@@ -13,7 +14,8 @@ import managers.TypeManager;
  */
 public class TestSoIDoNotShootTheComp {
     public static void main(String[] args) throws SQLException {
-        System.out.println("\"SELECT `typeId` FROM typetbl WHERE `typeName` = '" + 7 + "';\"");
+       OrdersManager o = new OrdersManager(); 
+       // System.out.println(o.print());
         
     }
 }

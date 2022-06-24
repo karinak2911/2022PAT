@@ -51,6 +51,23 @@ public class TypeManager {
     size++; 
     }
     
+    public void deleteType(String typeName) throws SQLException{ 
+        for(int i = 0; i < size; i++){ 
+            if(typeArr[i].getTypeName().equalsIgnoreCase(typeName))
+                this.shiftLeft(i);
+        }
+        String query = "DELETE FROM cutos.typetbl WHERE `typeName` = '" + typeName + "';" ;
+        SystemManager.db.update(query); 
+
+    }
+    
+    private void shiftLeft(int index) {
+        for (int i = index; i < size; i++) {
+            typeArr[i] = typeArr[i + 1];
+        }
+        size--;
+    }
+    
     
     public String tpstring(){ 
        String out = ""; 

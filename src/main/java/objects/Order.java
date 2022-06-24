@@ -13,15 +13,17 @@ public class Order {
     private String studentName; 
     private double price; 
     private String paymentMeothod; 
-    private User user; 
+    private int userID; 
+    private boolean collected; 
    
 
-    public Order(int orderID, String studentName, double price,String paymentMeothod ,User user ) {
+    public Order(int orderID, String studentName, double price,String paymentMeothod ,int userID, boolean collected ) {
         this.orderID = orderID;
         this.studentName = studentName;
         this.price = price;
-        this.user = user;
+        this.userID = userID;
         this.paymentMeothod = paymentMeothod;
+        this.collected = collected; 
     }
     
     
@@ -35,7 +37,7 @@ public class Order {
         this.orderID = orderID;
     }
 
-    public String getStudentName() {
+    public String getStudentFullname() {
         return studentName;
     }
 
@@ -52,12 +54,12 @@ public class Order {
         this.price = price;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(int userId) {
+        this.userID = userId;
     }
 
     public String getPaymentMeothod() {
@@ -67,6 +69,16 @@ public class Order {
     public void setPaymentMeothod(String paymentMeothod) {
         this.paymentMeothod = paymentMeothod;
     }
+
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
+    }
+    
+    
     
     
     

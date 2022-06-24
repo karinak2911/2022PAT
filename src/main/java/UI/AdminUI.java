@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import managers.MenuManager;
@@ -28,6 +29,24 @@ public class AdminUI extends javax.swing.JFrame {
     /**
      * Creates new form HomeScreenWaiterUI
      */
+    
+    public AdminUI() throws ClassNotFoundException, SQLException {
+        initComponents();
+        systemManager = new SystemManager();
+        DOBdatePicker.setDateToToday();
+        
+      
+        
+        this.populateOrderTable();
+        this.populateMenuTable();
+        this.populateStudentTable();
+        this.populateUserTable(); 
+
+        this.populateTypeComboBox();
+    
+        
+       
+    }
     
     public void populateTypeComboBox(){ 
         DefaultComboBoxModel<String> comboModelTypes = new DefaultComboBoxModel<String>();
@@ -94,25 +113,12 @@ studentsTable.setModel(systemManager.sm);
             
     }
     
+    public void populateOrderTable(){ 
+        ordersTable.setModel(systemManager.om);
+    }
    
     
-    public AdminUI() throws ClassNotFoundException, SQLException {
-        initComponents();
-        systemManager = new SystemManager();
-        DOBdatePicker.setDateToToday();
-        
-      
-        
-        
-        this.populateMenuTable();
-        this.populateStudentTable();
-        this.populateUserTable(); 
-       
-        this.populateTypeComboBox();
     
-        
-       
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -140,10 +146,10 @@ studentsTable.setModel(systemManager.sm);
         jLabel19 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         ordersTable = new javax.swing.JTable();
-        collectedButton = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        orderJList = new javax.swing.JList<>();
         jLabel24 = new javax.swing.JLabel();
+        viewOrderButton = new javax.swing.JButton();
         viewSalesPanel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -260,17 +266,17 @@ studentsTable.setModel(systemManager.sm);
 
         ordersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Student Name", "Order", "Total", "Collected "
+                "Order ID", "student name", "Total", "Paynet method", "User ", "Collected "
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -279,30 +285,26 @@ studentsTable.setModel(systemManager.sm);
         });
         jScrollPane6.setViewportView(ordersTable);
 
-        collectedButton.setText("CHANGE TO COLLECTED");
-        collectedButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                collectedButtonActionPerformed(evt);
-            }
-        });
-
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        orderJList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane5.setViewportView(jList1);
+        jScrollPane5.setViewportView(orderJList);
 
         jLabel24.setText("ORDER");
+
+        viewOrderButton.setText("view order");
+        viewOrderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewOrderButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(collectedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -312,12 +314,16 @@ studentsTable.setModel(systemManager.sm);
                         .addGap(62, 62, 62)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(226, 226, 226)
+                        .addGap(232, 232, 232)
                         .addComponent(jLabel24))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(45, 45, 45)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(136, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(viewOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,12 +333,12 @@ studentsTable.setModel(systemManager.sm);
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(collectedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addComponent(viewOrderButton)
+                .addGap(22, 22, 22)
                 .addComponent(jLabel24)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout viewOrdersPanelLayout = new javax.swing.GroupLayout(viewOrdersPanel);
@@ -952,6 +958,11 @@ studentsTable.setModel(systemManager.sm);
         });
 
         deleteTypeButton.setText("DELETE TYPE");
+        deleteTypeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteTypeButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout manageMenuPanelLayout = new javax.swing.GroupLayout(manageMenuPanel);
         manageMenuPanel.setLayout(manageMenuPanelLayout);
@@ -1213,10 +1224,6 @@ studentsTable.setModel(systemManager.sm);
         // TODO add your handling code here:
     }//GEN-LAST:event_yesradioButtonActionPerformed
 
-    private void collectedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_collectedButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_collectedButtonActionPerformed
-
     private void adminTabbedPanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminTabbedPanMouseClicked
             // this array is teh coloumn names for the menu item table
 
@@ -1286,6 +1293,28 @@ studentsTable.setModel(systemManager.sm);
         // TODO add your handling code here:
     }//GEN-LAST:event_typenameTextFieldActionPerformed
 
+    private void deleteTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTypeButtonActionPerformed
+        // TODO add your handling code here:
+        
+                
+        
+    }//GEN-LAST:event_deleteTypeButtonActionPerformed
+
+    private void viewOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderButtonActionPerformed
+        // TODO add your handling code here:
+        
+        int rowIndex = ordersTable.getSelectedRow(); 
+        String[] data = new String[200]; 
+        try { 
+           data = systemManager.om.getOrderedItemsForOrder(rowIndex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        JList<String> deafault = new JList<String>(data);
+       orderJList.setModel(deafault);
+    }//GEN-LAST:event_viewOrderButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1341,7 +1370,6 @@ studentsTable.setModel(systemManager.sm);
     private javax.swing.JTabbedPane adminTabbedPan;
     private javax.swing.JCheckBox allCheckbox;
     private javax.swing.JComboBox<String> classComboBox;
-    private javax.swing.JButton collectedButton;
     private javax.swing.ButtonGroup confirmationSlipButtonGroup;
     private javax.swing.JButton deleteItemButton;
     private javax.swing.JButton deleteStudentButton;
@@ -1384,7 +1412,6 @@ studentsTable.setModel(systemManager.sm);
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -1408,6 +1435,7 @@ studentsTable.setModel(systemManager.sm);
     private javax.swing.JTable menuTable;
     private javax.swing.JRadioButton mostSoldradioButton;
     private javax.swing.JRadioButton noRadioButton;
+    private javax.swing.JList<String> orderJList;
     private javax.swing.JTable ordersTable;
     private javax.swing.JTextField passwordTextField;
     private javax.swing.JTable salesTable;
@@ -1420,6 +1448,7 @@ studentsTable.setModel(systemManager.sm);
     private javax.swing.JTextField typenameTextField;
     private javax.swing.JTable userTable;
     private javax.swing.ButtonGroup usertypeButtonGroup;
+    private javax.swing.JButton viewOrderButton;
     private javax.swing.JPanel viewOrdersPanel;
     private javax.swing.JButton viewPasswordButton;
     private javax.swing.JButton viewSalesButton;

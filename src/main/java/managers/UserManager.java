@@ -127,15 +127,32 @@ public class UserManager implements TableModel {
         User currentUser = userArr[rowIndex];
         String query = "UPDATE usertbl SET "; 
        switch(columnIndex){
-            case 1 -> 
+            case 1: 
                 userArr[rowIndex].setType((String)aValue);
-                
-            
-            case 2 -> userArr[rowIndex].setFirstName((String)aValue);
-            case 3 -> userArr[rowIndex].setLastName((String)aValue);
-            case 4 -> userArr[rowIndex].setEmail((String)aValue);
-             case 5 -> userArr[rowIndex].setPassword((String)aValue);
+                query += "`workerType` = '" + (String)aValue + "' WHERE `userID` = " + currentUser.getUserID()+ ";"; 
+                break; 
+            case 2: 
+                userArr[rowIndex].setFirstName((String)aValue);
+                query += "`firstName` = '" + (String)aValue + "' WHERE `userID` = " + currentUser.getUserID()+ ";"; ; 
+                 break; 
+            case 3: 
+                userArr[rowIndex].setLastName((String)aValue);
+                 query += "`surname` = '" + (String)aValue + "' WHERE `userID` = " + currentUser.getUserID()+ ";"; ; 
+                  break; 
+            case 4: 
+                userArr[rowIndex].setEmail((String)aValue);
+                query += "`emailAdress` = '" + (String)aValue + "' WHERE `userID` = " + currentUser.getUserID()+ ";"; ; 
+                 break; 
+             case 5: 
+                 userArr[rowIndex].setPassword((String)aValue);
+                 query += "`password` = '" + (String)aValue + "' WHERE `userID` = " + currentUser.getUserID()+ ";"; ; 
+                  break; 
         }
+       try {
+                   SystemManager.db.update(query); 
+                           } catch (SQLException ex) {
+                   Logger.getLogger(StudentManager.class.getName()).log(Level.SEVERE, null, ex);
+               }
     }
 
     @Override
