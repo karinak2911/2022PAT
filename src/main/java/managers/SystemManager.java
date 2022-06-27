@@ -14,39 +14,46 @@ import utils.DB;
  * @author Karinak
  */
 public class SystemManager {
-    	public static DB db;
-        public static MenuManager mm; 
-        public static StudentManager sm; 
-        public static UserManager um; 
-        public static OrdersManager om; 
-        public static OrderedItemManager otm; 
-         public static TypeManager tm; 
-        
-      public SystemManager(){   try {
-			db = new DB();
-			System.out.println("SM: DB object created");
-			mm = new MenuManager(); 
-			System.out.println("SM: Memu items initialised");
-			sm =  new StudentManager(); 
-			System.out.println("SM: Students initialised");
-                        um = new UserManager(); 
-                        System.out.println("SM: users initialised");
-                        om = new OrdersManager(); 
-                         System.out.println("SM: orders initialised");
-                         otm = new OrderedItemManager(); 
-                          System.out.println("SM: order items  initialised");
-                          tm = new TypeManager(); 
-                            System.out.println("SM: type items  initialised");
-                         
-                       
-		} catch (ClassNotFoundException ex) {
-			System.out.println("SM: Database driver could not be loaded");
-			Logger.getLogger(SystemManager.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (SQLException ex) {
-			System.out.println("SM: Database connection or query issue");
-			Logger.getLogger(SystemManager.class.getName()).log(Level.SEVERE, null, ex);
-		}
-        
-    
+
+    public static DB db;
+    public static MenuManager mm;
+    public static StudentManager sm;
+    public static UserManager um;
+    public static OrdersManager om;
+    public static OrderedItemManager otm;
+    public static TypeManager tm;
+    public static OrderManager omm;
+
+    public SystemManager() {
+        try {
+            db = new DB();
+            System.out.println("SM: DB object created");
+            mm = new MenuManager();
+            System.out.println("SM: Memu items initialised");
+            sm = new StudentManager();
+            System.out.println("SM: Students initialised");
+            um = new UserManager();
+            System.out.println("SM: users initialised");
+            om = new OrdersManager();
+            System.out.println("SM: orders initialised");
+            otm = new OrderedItemManager();
+            System.out.println("SM: order items  initialised");
+            tm = new TypeManager();
+            System.out.println("SM: type items  initialised");
+
+        } catch (ClassNotFoundException ex) {
+            System.out.println("SM: Database driver could not be loaded");
+            Logger.getLogger(SystemManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            System.out.println("SM: Database connection or query issue");
+            Logger.getLogger(SystemManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void initialiseOrderManager(int id) throws SQLException {
+        omm = new OrderManager(id);
+        System.out.println("SM: order items  initialised");
+    }
+
 }
-} 

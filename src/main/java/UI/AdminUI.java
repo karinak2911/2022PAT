@@ -11,54 +11,56 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import managers.MenuManager;
+import managers.OrderManager;
 import managers.SystemManager;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Karinak
  */
 public class AdminUI extends javax.swing.JFrame {
-    SystemManager systemManager; 
+
+    SystemManager systemManager;
+
     /**
      * Creates new form HomeScreenWaiterUI
      */
-    
+
     public AdminUI() throws ClassNotFoundException, SQLException {
         initComponents();
         systemManager = new SystemManager();
         DOBdatePicker.setDateToToday();
-        
-      
-        
-        this.populateOrderTable();
+
+        this.populateOrdersTable();
+    
         this.populateMenuTable();
         this.populateStudentTable();
-        this.populateUserTable(); 
-
+        this.populateUserTable();
+this.setOrderTabelSelectionModel();
         this.populateTypeComboBox();
-    
-        
-       
+
     }
-    
-    public void populateTypeComboBox(){ 
+
+    private void populateTypeComboBox() {
         DefaultComboBoxModel<String> comboModelTypes = new DefaultComboBoxModel<String>();
-        String[] types = systemManager.tm.typesForCombobox(); 
+        String[] types = systemManager.tm.typesForCombobox();
         for (int i = 0; i < systemManager.tm.getSize(); i++) {
             comboModelTypes.addElement(types[i]);
         }
         itemTypesCombobox.setModel(comboModelTypes);
     }
-    
-    public void populateStudentTable(){ 
-        
+
+    public void populateStudentTable() {
+
 //        String[] coloumNamesForStudentTb = new String[7];
 //        coloumNamesForStudentTb[0] = "First Name";
 //        coloumNamesForStudentTb[1] = "Surname";
@@ -72,34 +74,31 @@ public class AdminUI extends javax.swing.JFrame {
 //     Object[][] dataForStudentTable = systemManager.sm.getStudentTableData();
 //        DefaultTableModel model = new DefaultTableModel(dataForStudentTable, coloumNamesForStudentTb);
 //        studentsTable.setModel(model); 
-
-studentsTable.setModel(systemManager.sm);
+        studentsTable.setModel(systemManager.sm);
     }
-    
-    public void populateMenuTable(){ 
-        
+
+    public void populateMenuTable() {
+
 //        String[] coloumNames = new String[3];
 //        coloumNames[0] = "Names";
 //        coloumNames[1] = "Type";
 //        coloumNames[2] = "Price";
-        
-            // gets menu items data for table from menu item array object and populates table
+        // gets menu items data for table from menu item array object and populates table
 //            Object[][] dataForMenuItemTb = systemManager.mm.getMenuForTable();
-            // creates model
+        // creates model
 //            DefaultTableModel menuItemTableModel = new DefaultTableModel(dataForMenuItemTb, coloumNames);
-            // sets table to model
-            //menuTable.setModel(menuItemTableModel);
-            menuTable.setModel(systemManager.mm);
-            
+        // sets table to model
+        //menuTable.setModel(menuItemTableModel);
+        menuTable.setModel(systemManager.mm);
+
     }
     
-    
-    
-    public void populateUserTable(){ 
+   
+    public void populateUserTable() {
         /*String[] coloumNames = new String[6];
         coloumNames[0] = "Waiter ID"; 
         coloumNames[1] = "Job type"; 
-        coloumNames[2] = "First Name"; 
+        coloumNames[2] = "First Nam; 
         coloumNames[3] = "Surname"; 
         coloumNames[4] = "Email address"; 
         coloumNames[5] = "Password"; 
@@ -107,18 +106,14 @@ studentsTable.setModel(systemManager.sm);
           Object[][] dataForUserTable = systemManager.um.getUsersForTable(); 
             DefaultTableModel menuItemTableModel = new DefaultTableModel(dataForUserTable, coloumNames);
             userTable.setModel(menuItemTableModel);*/
-            
-            userTable.setModel(systemManager.um);
-           
-            
+
+        userTable.setModel(systemManager.um);
+
     }
-    
-    public void populateOrderTable(){ 
+
+    public void populateOrdersTable() {
         ordersTable.setModel(systemManager.om);
     }
-   
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -146,10 +141,9 @@ studentsTable.setModel(systemManager.sm);
         jLabel19 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         ordersTable = new javax.swing.JTable();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        orderJList = new javax.swing.JList<>();
         jLabel24 = new javax.swing.JLabel();
-        viewOrderButton = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        orderedItemtable = new javax.swing.JTable();
         viewSalesPanel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -257,7 +251,7 @@ studentsTable.setModel(systemManager.sm);
         );
         FAQsPanelLayout.setVerticalGroup(
             FAQsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGap(0, 608, Short.MAX_VALUE)
         );
 
         adminTabbedPan.addTab("FAQS", FAQsPanel);
@@ -285,21 +279,20 @@ studentsTable.setModel(systemManager.sm);
         });
         jScrollPane6.setViewportView(ordersTable);
 
-        orderJList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane5.setViewportView(orderJList);
-
         jLabel24.setText("ORDER");
 
-        viewOrderButton.setText("view order");
-        viewOrderButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewOrderButtonActionPerformed(evt);
+        orderedItemtable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Name", "Type", "Price", "Quantity"
             }
-        });
+        ));
+        jScrollPane7.setViewportView(orderedItemtable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -311,47 +304,43 @@ studentsTable.setModel(systemManager.sm);
                         .addGap(252, 252, 252)
                         .addComponent(jLabel19))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(68, 68, 68)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(232, 232, 232)
-                        .addComponent(jLabel24))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(136, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(viewOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(276, 276, 276)
+                        .addComponent(jLabel24)))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel19)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(viewOrderButton)
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
                 .addComponent(jLabel24)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(206, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout viewOrdersPanelLayout = new javax.swing.GroupLayout(viewOrdersPanel);
         viewOrdersPanel.setLayout(viewOrdersPanelLayout);
         viewOrdersPanelLayout.setHorizontalGroup(
             viewOrdersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(viewOrdersPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         viewOrdersPanelLayout.setVerticalGroup(
             viewOrdersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(viewOrdersPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewOrdersPanelLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 26, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         adminTabbedPan.addTab("View orders", viewOrdersPanel);
@@ -476,7 +465,7 @@ studentsTable.setModel(systemManager.sm);
                             .addComponent(wrapCheckBox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SaladCheckBox)
-                        .addContainerGap(267, Short.MAX_VALUE))
+                        .addContainerGap(285, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewSalesPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(viewSalesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -939,6 +928,11 @@ studentsTable.setModel(systemManager.sm);
         jLabel11.setText("Price: ");
 
         itemTypesCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        itemTypesCombobox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemTypesComboboxActionPerformed(evt);
+            }
+        });
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
@@ -1053,7 +1047,7 @@ studentsTable.setModel(systemManager.sm);
                             .addComponent(itempricetextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(addTypeButton)
                             .addComponent(typenameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1092,23 +1086,21 @@ studentsTable.setModel(systemManager.sm);
     private void addItemtButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemtButtonActionPerformed
         try {
             // TODO add your handling code here:
- 
-            
+
 // gets the name, type and price of new mneu item 
-        String name = itemNameTextField.getText();
-        String type = (String) (itemTypesCombobox.getSelectedItem());
-        double price = Double.parseDouble(itempricetextField.getText());
+            String name = itemNameTextField.getText();
+            String type = (String) (itemTypesCombobox.getSelectedItem());
+            double price = Double.parseDouble(itempricetextField.getText());
 
-        //adds the item to the array 
-        systemManager.mm.add(name, type, price);
-        this.populateMenuTable();
-       //NOT UPDATING UI 
+            //adds the item to the array 
+            systemManager.mm.add(name, type, price);
+            this.populateMenuTable();
+            //NOT UPDATING UI 
 
-   
         } catch (SQLException ex) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_addItemtButtonActionPerformed
 
     private void firstNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameTextFieldActionPerformed
@@ -1122,83 +1114,71 @@ studentsTable.setModel(systemManager.sm);
 
     private void IDtextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IDtextFieldKeyTyped
         // TODO add your handling code here:
-           IDtextField.setBackground(Color.white);
-           errorMsgLabel.setText("");
-       
+        IDtextField.setBackground(Color.white);
+        errorMsgLabel.setText("");
+
     }//GEN-LAST:event_IDtextFieldKeyTyped
 
     private void addStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentButtonActionPerformed
         // TODO add your handling code here:
-      
-         String firstName = firstNameTextField.getText(); 
-         String surname = surnameTextField.getText(); 
-         String idNumber = IDtextField.getText(); 
-         String sClass = (String) (classComboBox.getSelectedItem());
-         int grade = 0;
-         String gradeStr = (String)gradeComboBox.getSelectedItem();
-         LocalDate dob = DOBdatePicker.getDate(); 
-         
-         //check if id
-         
 
-         
-         if(firstName.isBlank() ||  !Student.isValidFirstName(firstName)){ 
-             firstNameTextField.setBackground(Color.red);
-             errorMsgLabel.setText("First name not valid");
-             errorMsgLabel.setForeground(Color.red);
-            
-         }
-         else if(surname.isBlank() || !Student.isValidLastName(surname)){ 
-              surnameTextField.setBackground(Color.red);
-             errorMsgLabel.setText("Surname not valid");
-             errorMsgLabel.setForeground(Color.red);
-         }
-         else if(idNumber.isBlank() || !Student.isValidID(idNumber) ){ 
-             IDtextField.setBackground(Color.red);
-             errorMsgLabel.setText("ID num not valid");
-             errorMsgLabel.setForeground(Color.red);
-         }
-         else if(sClass.compareToIgnoreCase("-") == 0){ 
-             errorMsgLabel.setText("Please select a class");
-             errorMsgLabel.setForeground(Color.red);
-         }
-         else if(gradeStr.equals("-")){ 
+        String firstName = firstNameTextField.getText();
+        String surname = surnameTextField.getText();
+        String idNumber = IDtextField.getText();
+        String sClass = (String) (classComboBox.getSelectedItem());
+        int grade = 0;
+        String gradeStr = (String) gradeComboBox.getSelectedItem();
+        LocalDate dob = DOBdatePicker.getDate();
+
+        //check if id
+        if (firstName.isBlank() || !Student.isValidFirstName(firstName)) {
+            firstNameTextField.setBackground(Color.red);
+            errorMsgLabel.setText("First name not valid");
+            errorMsgLabel.setForeground(Color.red);
+
+        } else if (surname.isBlank() || !Student.isValidLastName(surname)) {
+            surnameTextField.setBackground(Color.red);
+            errorMsgLabel.setText("Surname not valid");
+            errorMsgLabel.setForeground(Color.red);
+        } else if (idNumber.isBlank() || !Student.isValidID(idNumber)) {
+            IDtextField.setBackground(Color.red);
+            errorMsgLabel.setText("ID num not valid");
+            errorMsgLabel.setForeground(Color.red);
+        } else if (sClass.compareToIgnoreCase("-") == 0) {
+            errorMsgLabel.setText("Please select a class");
+            errorMsgLabel.setForeground(Color.red);
+        } else if (gradeStr.equals("-")) {
             errorMsgLabel.setText("Please select a grade");
             errorMsgLabel.setForeground(Color.red);
-         }
-         else if(!Student.isValidDOB(idNumber, dob)){ 
-             errorMsgLabel.setText("Birthdate does not match id");
-             DOBdatePicker.setBackground(Color.red);
-             errorMsgLabel.setForeground(Color.red);
-             
-         }
-         
-         else {
-         
-             try {
-                 grade = Integer.parseInt(gradeStr);
-                 JOptionPane.showMessageDialog(null, "Student successfully added");
-                 systemManager.sm.addStudent(idNumber, firstName, surname, sClass, grade, dob);
-                 
-                 
-                 firstNameTextField.setText("");
-                 surnameTextField.setText("");
-                 IDtextField.setText("");
-                 gradeComboBox.setSelectedIndex(0);
-                 DOBdatePicker.setDateToToday();
-                 classComboBox.setSelectedIndex(0);
-                 
-                 
-                 this.populateStudentTable();
-             } catch (SQLException ex) {
-                 Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
-             }
-         } 
+        } else if (!Student.isValidDOB(idNumber, dob)) {
+            errorMsgLabel.setText("Birthdate does not match id");
+            DOBdatePicker.setBackground(Color.red);
+            errorMsgLabel.setForeground(Color.red);
+
+        } else {
+
+            try {
+                grade = Integer.parseInt(gradeStr);
+                JOptionPane.showMessageDialog(null, "Student successfully added");
+                systemManager.sm.addStudent(idNumber, firstName, surname, sClass, grade, dob);
+
+                firstNameTextField.setText("");
+                surnameTextField.setText("");
+                IDtextField.setText("");
+                gradeComboBox.setSelectedIndex(0);
+                DOBdatePicker.setDateToToday();
+                classComboBox.setSelectedIndex(0);
+
+                this.populateStudentTable();
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_addStudentButtonActionPerformed
 
     private void surnameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surnameTextFieldActionPerformed
         // TODO add your handling code here:
-     
+
     }//GEN-LAST:event_surnameTextFieldActionPerformed
 
     private void firstNameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_firstNameTextFieldKeyTyped
@@ -1209,15 +1189,15 @@ studentsTable.setModel(systemManager.sm);
 
     private void surnameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_surnameTextFieldKeyTyped
         // TODO add your handling code here:
-           surnameTextField.setBackground(Color.white);
+        surnameTextField.setBackground(Color.white);
         errorMsgLabel.setText("");
     }//GEN-LAST:event_surnameTextFieldKeyTyped
 
     private void DOBdatePickerPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_DOBdatePickerPropertyChange
         // TODO add your handling code here:  
-         DOBdatePicker.setBackground(Color.white);
+        DOBdatePicker.setBackground(Color.white);
         errorMsgLabel.setText("");
-        
+
     }//GEN-LAST:event_DOBdatePickerPropertyChange
 
     private void yesradioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesradioButtonActionPerformed
@@ -1225,40 +1205,40 @@ studentsTable.setModel(systemManager.sm);
     }//GEN-LAST:event_yesradioButtonActionPerformed
 
     private void adminTabbedPanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminTabbedPanMouseClicked
-            // this array is teh coloumn names for the menu item table
+        // this array is teh coloumn names for the menu item table
 
-        
+
     }//GEN-LAST:event_adminTabbedPanMouseClicked
 
     private void deleteItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemButtonActionPerformed
         // TODO add your handling code here:
-            // the menutitem arrray reads in the menu items from a text file and populates an array 
-   
+        // the menutitem arrray reads in the menu items from a text file and populates an array 
+
         // gets the menu item name and type at seleceted row in table to be removed 
         int row = menuTable.getSelectedRow();
-    
+
         try {
             // deleted the menu item from the array
             systemManager.mm.remove(row);
         } catch (SQLException ex) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-       this.populateMenuTable();
+        this.populateMenuTable();
 
-        
+
     }//GEN-LAST:event_deleteItemButtonActionPerformed
 
     private void manageStudenstPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageStudenstPanelMouseClicked
         // TODO add your handling code here:
         this.populateStudentTable();
-        
-    
+
+
     }//GEN-LAST:event_manageStudenstPanelMouseClicked
 
     private void studentsTableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentsTableMouseEntered
         // TODO add your handling code here:
-           
-       
+
+
     }//GEN-LAST:event_studentsTableMouseEntered
 
     private void manageWorkersPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageWorkersPanelMouseEntered
@@ -1280,7 +1260,7 @@ studentsTable.setModel(systemManager.sm);
 
     private void addTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTypeButtonActionPerformed
         // TODO add your handling code here:
-        String typeName = typenameTextField.getText(); 
+        String typeName = typenameTextField.getText();
         try {
             systemManager.tm.addType(typeName);
         } catch (SQLException ex) {
@@ -1295,25 +1275,34 @@ studentsTable.setModel(systemManager.sm);
 
     private void deleteTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTypeButtonActionPerformed
         // TODO add your handling code here:
-        
-                
-        
+
+
     }//GEN-LAST:event_deleteTypeButtonActionPerformed
 
-    private void viewOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderButtonActionPerformed
+    private void itemTypesComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemTypesComboboxActionPerformed
         // TODO add your handling code here:
-        
-        int rowIndex = ordersTable.getSelectedRow(); 
-        String[] data = new String[200]; 
-        try { 
-           data = systemManager.om.getOrderedItemsForOrder(rowIndex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        JList<String> deafault = new JList<String>(data);
-       orderJList.setModel(deafault);
-    }//GEN-LAST:event_viewOrderButtonActionPerformed
+    }//GEN-LAST:event_itemTypesComboboxActionPerformed
+
+    private void setOrderTabelSelectionModel() {
+        ordersTable.setRowSelectionAllowed(true);
+        ListSelectionModel cellSelectionModel = ordersTable.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                int id = ((Integer)ordersTable.getValueAt(ordersTable.getSelectedRow(), 0)).intValue(); 
+                try {
+                    systemManager.initialiseOrderManager(id);
+                    orderedItemtable.setModel(systemManager.omm);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    
+
+            }
+
+        });
+    }
 
     /**
      * @param args the command line arguments
@@ -1423,8 +1412,8 @@ studentsTable.setModel(systemManager.sm);
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField lastNameTextField;
     private javax.swing.JRadioButton leastSoldRadioButton;
@@ -1435,7 +1424,7 @@ studentsTable.setModel(systemManager.sm);
     private javax.swing.JTable menuTable;
     private javax.swing.JRadioButton mostSoldradioButton;
     private javax.swing.JRadioButton noRadioButton;
-    private javax.swing.JList<String> orderJList;
+    private javax.swing.JTable orderedItemtable;
     private javax.swing.JTable ordersTable;
     private javax.swing.JTextField passwordTextField;
     private javax.swing.JTable salesTable;
@@ -1448,7 +1437,6 @@ studentsTable.setModel(systemManager.sm);
     private javax.swing.JTextField typenameTextField;
     private javax.swing.JTable userTable;
     private javax.swing.ButtonGroup usertypeButtonGroup;
-    private javax.swing.JButton viewOrderButton;
     private javax.swing.JPanel viewOrdersPanel;
     private javax.swing.JButton viewPasswordButton;
     private javax.swing.JButton viewSalesButton;

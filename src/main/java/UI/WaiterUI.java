@@ -1,5 +1,9 @@
 package UI;
 
+import javax.swing.DefaultComboBoxModel;
+import managers.SystemManager;
+import objects.User;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -11,13 +15,27 @@ package UI;
  */
 public class WaiterUI extends javax.swing.JFrame {
 
+    SystemManager systemManager;
+    int waiterID; 
+    User u; 
     /**
      * Creates new form HomeScreenAdminUI
      */
     public WaiterUI() {
         initComponents();
+          systemManager = new SystemManager();
+          this.populateTypeCombobox();
     }
 
+    
+   public void populateTypeCombobox(){ 
+         DefaultComboBoxModel<String> comboModelTypes = new DefaultComboBoxModel<String>();
+        String[] types = systemManager.tm.typesForCombobox();
+        for (int i = 0; i < systemManager.tm.getSize(); i++) {
+            comboModelTypes.addElement(types[i]);
+        }
+        menuTypeComboBox.setModel(comboModelTypes);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,7 +61,7 @@ public class WaiterUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         menuItemsTable = new javax.swing.JTable();
-        orderTypeComboBox = new javax.swing.JComboBox<>();
+        menuTypeComboBox = new javax.swing.JComboBox<>();
         quantitySpinner = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -193,7 +211,12 @@ public class WaiterUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(menuItemsTable);
 
-        orderTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        menuTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        menuTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTypeComboBoxActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("MENU: ");
 
@@ -258,7 +281,7 @@ public class WaiterUI extends javax.swing.JFrame {
                         .addGap(71, 71, 71)
                         .addComponent(jLabel1)
                         .addGap(55, 55, 55)
-                        .addComponent(orderTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(menuTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(181, 181, 181)
                         .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -310,7 +333,7 @@ public class WaiterUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(orderTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -384,6 +407,10 @@ public class WaiterUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_collectedButtonActionPerformed
 
+    private void menuTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTypeComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuTypeComboBoxActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -446,7 +473,7 @@ public class WaiterUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable menuItemsTable;
-    private javax.swing.JComboBox<String> orderTypeComboBox;
+    private javax.swing.JComboBox<String> menuTypeComboBox;
     private javax.swing.JTable ordersTable;
     private javax.swing.ButtonGroup paymentMethodButtonGroup;
     private javax.swing.JSpinner quantitySpinner;

@@ -16,6 +16,13 @@ public class OrderedItem extends MenuItem {
         this.quantity = quantity;
     }
 
+    public OrderedItem(int quantity, String itemName, String itemType, double price) {
+        super(itemName, itemType, price);
+        this.quantity = quantity;
+    }
+    
+    
+
     public int getQuantity() {
         return quantity;
     }

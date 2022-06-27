@@ -41,7 +41,7 @@ public class LoginUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        workerTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "owner", "waiter" }));
+        workerTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "user", "waiter" }));
 
         jLabel1.setText("WELCOME TO CUTOS ");
 
@@ -60,6 +60,11 @@ public class LoginUI extends javax.swing.JFrame {
         });
 
         loginButton.setText("LOGIN");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -143,6 +148,12 @@ public class LoginUI extends javax.swing.JFrame {
     private void usernameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameTextFieldActionPerformed
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        // TODO add your handling code here:
+        if(workerTypeComboBox.getSelectedIndex() == 1)
+            
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
      * @param args the command line arguments
