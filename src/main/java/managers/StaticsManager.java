@@ -10,48 +10,40 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
-import objects.OrderedItem;
+import objects.MenuItem;
 
 /**
  *
  * @author Karinak
  */
-public class OrderManager implements TableModel{
+public class StaticsManager implements TableModel{
     
-    OrderedItem[] orderedItemArr = new OrderedItem[200]; 
-    int size = 0; 
- 
-
+    MenuItem[] menuArr = new MenuItem[200]; 
+    int size = 0;
     
-    public OrderManager(int id) throws SQLException{ 
-        String query = "SELECT menuitemtbl.`itemName`, typetbl.`typeName`, menuitemtbl.`itemPrice`, ordereditemtbl.quantity \n" +
-" FROM ordereditemtbl,orderstbl,menuitemtbl, typetbl \n" +
-"WHERE menuitemtbl.`typeID` = typetbl.`typeId` AND ordereditemtbl.`orderID` = orderstbl.`OrderID` AND ordereditemtbl.`menuItemID` = menuitemtbl.`itemID` AND orderstbl.`OrderID` = " + id +
-";"; 
-        
+    
+    public StaticsManager() throws SQLException{ 
+        String query = "SELECT menuitemtbl.`itemName`, typetbl.`typeName`, menuitemtbl.`itemPrice`, SUM(ordereditemtbl.quantity) AS times_sold\n" +
+" FROM ordereditemtbl, typetbl, menuitemtbl\n" +
+"WHERE typetbl.`typeId` = menuitemtbl.`typeID` AND ordereditemtbl.`menuItemID` = menuitemtbl.`itemID`\n" +
+"GROUP BY menuitemtbl.`itemID`"
+                + "ORDER BY times_sold DESC;"; 
         ResultSet rs = SystemManager.db.query(query); 
          while(rs.next()){ 
-             String name = rs.getString(1); 
-             String type = rs.getString(2); 
+             String menuItemName = rs.getString(1); 
+             String typeName = rs.getString(2); 
              double price = rs.getDouble(3); 
-             int quantity = rs.getInt(4); 
+             int timesSold = rs.getInt(4); 
              
-             orderedItemArr[size] = new OrderedItem(quantity, name, type, price); 
+             menuArr[size] = new MenuItem(menuItemName, typeName, price, timesSold); 
              size++; 
-             
          }
-       
+        
     }
-
-    
-
-    
-    
-    
 
     @Override
     public int getRowCount() {
-        return size; 
+       return size; 
     }
 
     @Override
@@ -61,20 +53,21 @@ public class OrderManager implements TableModel{
 
     @Override
     public String getColumnName(int columnIndex) {
-         String name ="";
+        String name ="";
         switch(columnIndex){
-            case 0 -> name = "Menu Item Name"; 
-            case 1 -> name = "Menu Item Type"; 
-            case 2 -> name =  "Menu Item Price"; 
-            case 3 -> name = "Quantity"; 
-                    
-                    } 
-        return name; 
+            case 0 -> name = "Name";
+            case 1 -> name = "Type";
+            case 2 -> name = "Price";
+            case 3 -> name = "Times Sold";
+            
+        }
+        
+        return name;
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        Class<?> temp =getClass();
+       Class<?> temp =getClass();
         try {
             switch(columnIndex){
                 case 0 -> temp = Class.forName("java.lang.String");
@@ -86,7 +79,6 @@ public class OrderManager implements TableModel{
             Logger.getLogger(MenuManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return temp;
-
     }
 
     @Override
@@ -96,12 +88,12 @@ public class OrderManager implements TableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Object out = new Object();
+         Object out = new Object();
         switch(columnIndex){
-            case 0 -> out = orderedItemArr[rowIndex].getItemName();
-            case 1 -> out = orderedItemArr[rowIndex].getItemType();
-            case 2 -> out = orderedItemArr[rowIndex].getPrice();
-            case 3 -> out = orderedItemArr[rowIndex].getQuantity();
+            case 0 -> out = menuArr[rowIndex].getItemName();
+            case 1 -> out = menuArr[rowIndex].getItemType();
+            case 2 -> out = menuArr[rowIndex].getPrice();
+            case 3 -> out = menuArr[rowIndex].getTimesSold();
             
         }
         
@@ -115,12 +107,11 @@ public class OrderManager implements TableModel{
 
     @Override
     public void addTableModelListener(TableModelListener l) {
-        
+       
     }
 
     @Override
     public void removeTableModelListener(TableModelListener l) {
-        
+      
     }
-    
 }

@@ -22,6 +22,26 @@ import utils.DB;
 public class MenuManager implements TableModel{
     MenuItem[] menuArr = new MenuItem[200]; 
     int size = 0; 
+ 
+
+    public MenuManager(String typeGiven) throws SQLException {
+        String query = "SELECT menuitemtbl.`itemID`, menuitemtbl.`itemName`, typetbl.`typeName`, menuitemtbl.`itemPrice` FROM menuitemtbl,typetbl\n" +
+"WHERE menuitemtbl.`typeID` = typetbl.`typeId` AND typetbl.`typeName` = '" + typeGiven + "' ;";
+       
+        
+        ResultSet rs = SystemManager.db.query(query);
+        
+        while(rs.next()){
+            int ID = rs.getInt(1); 
+            String name = rs.getString(2); 
+            String type = rs.getString(3); 
+            double price = rs.getDouble(4); 
+            
+            
+            menuArr[size] = new MenuItem(ID, name, type, price);
+            size++;
+        }
+    }
     
     public MenuManager() throws ClassNotFoundException, SQLException{
        
@@ -67,8 +87,8 @@ public class MenuManager implements TableModel{
         
        SystemManager.db.update(query);
         menuArr[size] = new MenuItem(name, type, price);
-        size++; 
-        
+        size++;
+         
 
         
     }
@@ -169,19 +189,19 @@ public class MenuManager implements TableModel{
             case 1: 
                 menuArr[rowIndex].setItemName((String)aValue);
                 query += "`itemName` = '" + ((String)aValue) + "' WHERE `itemID` = " + m.getMenuItemID()+ ";"; 
-                System.out.println(query);
+                
                 break; 
                
               
             case 2: 
                 menuArr[rowIndex].setItemType((String)aValue);
                query += "`typeID`= (SELECT `typeID` FROM typetbl WHERE `typeName` = '" + ((String)aValue) +  "') WHERE `itemID` = " + m.getMenuItemID()+ ";"; 
-               System.out.println(query); 
+          
                break;
             case 3 : 
                 menuArr[rowIndex].setPrice(((Double) aValue).doubleValue());
                 query += "`itemPrice` = " + (((Double) aValue).doubleValue()) + " WHERE `typeID` = " + m.getMenuItemID()+ ";"; 
-                System.out.println(query); 
+     
                 break;
                 //redo
             

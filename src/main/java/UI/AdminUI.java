@@ -41,7 +41,7 @@ public class AdminUI extends javax.swing.JFrame {
         DOBdatePicker.setDateToToday();
 
         this.populateOrdersTable();
-    
+    this.populateStatsTable();
         this.populateMenuTable();
         this.populateStudentTable();
         this.populateUserTable();
@@ -77,7 +77,7 @@ this.setOrderTabelSelectionModel();
         studentsTable.setModel(systemManager.sm);
     }
 
-    public void populateMenuTable() {
+    public void populateMenuTable() throws SQLException, ClassNotFoundException {
 
 //        String[] coloumNames = new String[3];
 //        coloumNames[0] = "Names";
@@ -89,6 +89,7 @@ this.setOrderTabelSelectionModel();
 //            DefaultTableModel menuItemTableModel = new DefaultTableModel(dataForMenuItemTb, coloumNames);
         // sets table to model
         //menuTable.setModel(menuItemTableModel);
+           systemManager.initialiseMenuManager();
         menuTable.setModel(systemManager.mm);
 
     }
@@ -110,8 +111,13 @@ this.setOrderTabelSelectionModel();
         userTable.setModel(systemManager.um);
 
     }
+    
+    public void populateStatsTable(){ 
+        statsTable.setModel(systemManager.stm); 
+    }
 
-    public void populateOrdersTable() {
+    public void populateOrdersTable() throws SQLException {
+        systemManager.initialiseAllOrders();
         ordersTable.setModel(systemManager.om);
     }
 
@@ -134,6 +140,7 @@ this.setOrderTabelSelectionModel();
         mealButtongroup = new javax.swing.ButtonGroup();
         viewPasswordButton = new javax.swing.JButton();
         usertypeButtonGroup = new javax.swing.ButtonGroup();
+        orderBybuttonGroup = new javax.swing.ButtonGroup();
         adminTabbedPan = new javax.swing.JTabbedPane();
         FAQsPanel = new javax.swing.JPanel();
         viewOrdersPanel = new javax.swing.JPanel();
@@ -147,7 +154,7 @@ this.setOrderTabelSelectionModel();
         viewSalesPanel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        salesTable = new javax.swing.JTable();
+        statsTable = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
         mostSoldradioButton = new javax.swing.JRadioButton();
         leastSoldRadioButton = new javax.swing.JRadioButton();
@@ -345,32 +352,25 @@ this.setOrderTabelSelectionModel();
 
         adminTabbedPan.addTab("View orders", viewOrdersPanel);
 
-        jLabel12.setText("SALES ");
+        jLabel12.setText("Stats ");
 
-        salesTable.setModel(new javax.swing.table.DefaultTableModel(
+        statsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Item Name", "Item Type", "Item Price ", "Times Sold ", "Total sales "
+                "Item Name", "Item Type", "Item Price ", "Times Sold "
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane3.setViewportView(salesTable);
+        ));
+        jScrollPane3.setViewportView(statsTable);
 
         jLabel13.setText("Order By ");
 
         soldButtonGroup.add(mostSoldradioButton);
+        mostSoldradioButton.setSelected(true);
         mostSoldradioButton.setText("Most sold");
 
         soldButtonGroup.add(leastSoldRadioButton);
@@ -378,6 +378,7 @@ this.setOrderTabelSelectionModel();
 
         jLabel14.setText("Type");
 
+        allCheckbox.setSelected(true);
         allCheckbox.setText("All ");
 
         sandwichtextBox.setText("Sandwich");
@@ -472,7 +473,7 @@ this.setOrderTabelSelectionModel();
                         .addContainerGap())))
         );
 
-        adminTabbedPan.addTab("View Sales", viewSalesPanel);
+        adminTabbedPan.addTab("View Stats ", viewSalesPanel);
 
         manageWorkersPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1094,8 +1095,12 @@ this.setOrderTabelSelectionModel();
 
             //adds the item to the array 
             systemManager.mm.add(name, type, price);
-            this.populateMenuTable();
-            //NOT UPDATING UI 
+            try {
+                this.populateMenuTable();
+                //NOT UPDATING UI 
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -1223,7 +1228,13 @@ this.setOrderTabelSelectionModel();
         } catch (SQLException ex) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.populateMenuTable();
+        try {
+            this.populateMenuTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 
     }//GEN-LAST:event_deleteItemButtonActionPerformed
@@ -1274,7 +1285,14 @@ this.setOrderTabelSelectionModel();
     }//GEN-LAST:event_typenameTextFieldActionPerformed
 
     private void deleteTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTypeButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            systemManager.tm.deleteType((String)itemTypesCombobox.getSelectedItem());
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.populateTypeComboBox();
+   
 
 
     }//GEN-LAST:event_deleteTypeButtonActionPerformed
@@ -1293,7 +1311,7 @@ this.setOrderTabelSelectionModel();
                 int id = ((Integer)ordersTable.getValueAt(ordersTable.getSelectedRow(), 0)).intValue(); 
                 try {
                     systemManager.initialiseOrderManager(id);
-                    orderedItemtable.setModel(systemManager.omm);
+                    orderedItemtable.setModel(systemManager.orm);
                 } catch (SQLException ex) {
                     Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -1424,13 +1442,14 @@ this.setOrderTabelSelectionModel();
     private javax.swing.JTable menuTable;
     private javax.swing.JRadioButton mostSoldradioButton;
     private javax.swing.JRadioButton noRadioButton;
+    private javax.swing.ButtonGroup orderBybuttonGroup;
     private javax.swing.JTable orderedItemtable;
     private javax.swing.JTable ordersTable;
     private javax.swing.JTextField passwordTextField;
-    private javax.swing.JTable salesTable;
     private javax.swing.JCheckBox sandwichtextBox;
     private javax.swing.JCheckBox snackCheckbox;
     private javax.swing.ButtonGroup soldButtonGroup;
+    private javax.swing.JTable statsTable;
     private javax.swing.JPanel studentPanel;
     private javax.swing.JTable studentsTable;
     private javax.swing.JTextField surnameTextField;

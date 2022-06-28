@@ -22,6 +22,7 @@ public class StudentManager implements TableModel{
 
     Student[] studentArr = new Student[200];
     private int size = 0;
+    private int studentArrComboBoxSize = 0; 
     
     public StudentManager() throws SQLException{ 
         String query = "SELECT * FROM studentstbl;"; 
@@ -41,6 +42,24 @@ public class StudentManager implements TableModel{
          }
     }
     
+    
+    public StudentManager(int gradeIn) throws SQLException{ 
+        String query = "SELECT * FROM studentstbl WHERE grade = " + gradeIn + ";"; 
+         ResultSet rs = SystemManager.db.query(query);
+         while(rs.next()){ 
+             int studentID = rs.getInt(1); 
+             String firstName = rs.getString(2); 
+             String surname = rs.getString(3); 
+             int grade = rs.getInt(4); 
+             String sClass = rs.getString(5); 
+             String idnum = rs.getString(6); 
+             java.sql.Date dob = rs.getDate(7);  
+             LocalDate d = dob.toLocalDate(); 
+             
+             studentArr[size] = new Student(studentID, firstName, surname, idnum, sClass, grade, d); 
+             size++; 
+         }
+    }
      public void shiftLeft(int index) {
         for (int i = index; i < size; i++) {
             studentArr[i] = studentArr[i + 1];
@@ -183,32 +202,32 @@ public class StudentManager implements TableModel{
             case 1: 
                 studentArr[rowIndex].setFirstname((String)aValue);
                 query+= "`firstName` = '" + ((String)aValue) + "' WHERE `StudentID` = " + s.getStudentID() + ";"; 
-                System.out.println(query);
+           
                 break; 
             case 2: 
                 studentArr[rowIndex].setSurname((String)aValue);
                  query+= "`surname` = '" + ((String)aValue) + "' WHERE `StudentID` = " + s.getStudentID() + ";";             
-                  System.out.println(query); 
+                
                   break; 
             case 3: 
                 studentArr[rowIndex].setGrade(((Integer) aValue).intValue());
                  query+= "`grade` = " + ((Integer) aValue).intValue() + " WHERE `StudentID` = " + s.getStudentID() + ";"; 
-                  System.out.println(query);
+            
                                   break; 
             case 4: 
                 studentArr[rowIndex].setsClass((String)aValue);
                  query+= "`Class` = '" + ((String)aValue) + "' WHERE `StudentID` = " + s.getStudentID() + ";"; 
-                  System.out.println(query);
+            
                                   break; 
              case 5:
                  studentArr[rowIndex].setIdNumber((String)aValue);
                  query+= "`IDNumber` = '" + ((String)aValue) + "' WHERE `StudentID` = " + s.getStudentID() + ";";
-                  System.out.println(query);
+           
                                   break; 
               case 6: 
                  studentArr[rowIndex].setDob((LocalDate) aValue);
                  query+= "`dob` = '" + ((LocalDate)aValue) + "' WHERE `StudentID` = " + s.getStudentID() + ";";
-                  System.out.println(query);
+              
                                   break; 
         }
        try {
@@ -226,6 +245,22 @@ public class StudentManager implements TableModel{
     @Override
     public void removeTableModelListener(TableModelListener l) {
        
+    }
+    
+    public String[] getStudentsnamesAsarrayForComboBox(int grade) {
+        String[] output = new String[200];
+        for (int i = 0; i < size; i++) {
+           if(studentArr[i].getGrade() == grade){ 
+            output[i] = studentArr[i].getFirstname() + " " + studentArr[i].getSurname();
+            studentArrComboBoxSize++; 
+        } 
+        } 
+        return output;
+
+    }
+
+    public int getStudentArrComboBoxSize() {
+        return studentArrComboBoxSize;
     }
     
     

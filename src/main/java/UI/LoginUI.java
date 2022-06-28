@@ -1,5 +1,13 @@
 package UI;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import managers.SystemManager;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -13,11 +21,32 @@ public class LoginUI extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginUI
-     */
+     */ 
+    
+    SystemManager systemManager;
+      
+    public int waiterID = 0; 
+    
     public LoginUI() {
         initComponents();
+        systemManager = new SystemManager(); 
+        this.setIconOnPasswordButton();
     }
 
+  
+    
+    public int getWaiterID() {
+        return waiterID;
+    }
+    
+    public void setIconOnPasswordButton(){ 
+        Icon icon = new ImageIcon("https://iconmonstr.com/eye-9-svg/");
+        seePasswordButton.setIcon(icon);
+
+    }
+
+   
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,13 +64,14 @@ public class LoginUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        usernameTextField = new javax.swing.JTextField();
-        passwordfield = new javax.swing.JPasswordField();
+        emailtextField = new javax.swing.JTextField();
+        passwordTextField = new javax.swing.JPasswordField();
+        seePasswordButton = new javax.swing.JButton();
         loginButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        workerTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "user", "waiter" }));
+        workerTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "waiter" }));
 
         jLabel1.setText("WELCOME TO CUTOS ");
 
@@ -49,20 +79,23 @@ public class LoginUI extends javax.swing.JFrame {
 
         jLabel3.setText("Enter details: ");
 
-        jLabel4.setText("username:");
+        jLabel4.setText("email");
 
         jLabel5.setText("passsword:");
 
-        usernameTextField.addActionListener(new java.awt.event.ActionListener() {
+        emailtextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameTextFieldActionPerformed(evt);
+                emailtextFieldActionPerformed(evt);
             }
         });
 
-        loginButton.setText("LOGIN");
-        loginButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginButtonActionPerformed(evt);
+        seePasswordButton.setText("jButton1");
+        seePasswordButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                seePasswordButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                seePasswordButtonMouseReleased(evt);
             }
         });
 
@@ -71,7 +104,7 @@ public class LoginUI extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(87, 87, 87)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -92,13 +125,12 @@ public class LoginUI extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(emailtextField, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
-                                .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(loginButton)
-                                .addGap(11, 11, 11)))))
+                                .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(seePasswordButton)))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -112,49 +144,90 @@ public class LoginUI extends javax.swing.JFrame {
                 .addComponent(workerTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(43, 43, 43)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(loginButton)
-                        .addGap(23, 23, 23))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(emailtextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(seePasswordButton))
+                .addGap(31, 31, 31))
         );
+
+        loginButton.setText("LOGIN");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(loginButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(loginButton))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void usernameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameTextFieldActionPerformed
+    private void emailtextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailtextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usernameTextFieldActionPerformed
+    }//GEN-LAST:event_emailtextFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
-        if(workerTypeComboBox.getSelectedIndex() == 1)
-            
+        String email = emailtextField.getText(); 
+        String password = passwordTextField.getText(); 
+        if(workerTypeComboBox.getSelectedItem().equals("waiter") && systemManager.um.isUserValid(email, password, "waiter")){ 
+            try {
+                new WaiterUI().setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        this.dispose();
+        } 
+        else if(workerTypeComboBox.getSelectedItem().equals("admin") && systemManager.um.isUserValid(email, password, "admin")){ 
+            try {
+                new AdminUI().setVisible(true);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        this.dispose();
+        }
+        else
+            JOptionPane.showMessageDialog(rootPane, "Inavlid Login Details");
     }//GEN-LAST:event_loginButtonActionPerformed
 
+    private void seePasswordButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seePasswordButtonMousePressed
+        // TODO add your handling code here:
+        passwordTextField.setEchoChar((char)0); 
+    }//GEN-LAST:event_seePasswordButtonMousePressed
+
+    private void seePasswordButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seePasswordButtonMouseReleased
+        // TODO add your handling code here:
+        passwordTextField.setEchoChar('*'); 
+    }//GEN-LAST:event_seePasswordButtonMouseReleased
+
+    
     /**
      * @param args the command line arguments
      */
@@ -192,6 +265,7 @@ public class LoginUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPopupMenu autheticityPopUpMenu;
+    private javax.swing.JTextField emailtextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -199,8 +273,8 @@ public class LoginUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loginButton;
-    private javax.swing.JPasswordField passwordfield;
-    private javax.swing.JTextField usernameTextField;
+    private javax.swing.JPasswordField passwordTextField;
+    private javax.swing.JButton seePasswordButton;
     private javax.swing.JComboBox<String> workerTypeComboBox;
     // End of variables declaration//GEN-END:variables
 }

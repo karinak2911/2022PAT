@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import objects.Order;
+import objects.OrderedItem;
 
 /**
  *
@@ -20,6 +21,7 @@ public class OrdersManager implements TableModel{
     
     Order[] ordersArr = new Order[200]; 
     int size = 0; 
+    private int waiterID; 
 
     public OrdersManager() throws SQLException {
           String query = "SELECT orderstbl.`OrderID`, \n" +
@@ -49,6 +51,45 @@ public class OrdersManager implements TableModel{
         
         
     }
+    
+    public OrdersManager(int waiterID) throws SQLException{ 
+        String query = "SELECT orderstbl.`OrderID`, \n" +
+"CONCAT(studentstbl.`firstName` , \" \", studentstbl.surname) AS full_name, \n" +
+" SUM(menuitemtbl.`itemPrice` * ordereditemtbl.quantity) AS order_total, \n" +
+"orderstbl.`PaymentMethod`, \n" +
+"orderstbl.`UserID`, \n" +
+"orderstbl.collected\n" +
+" FROM orderstbl,studentstbl,ordereditemtbl, menuitemtbl\n" +
+"WHERE orderstbl.`OrderID` = ordereditemtbl.`orderID` AND orderstbl.`StudentID` = studentstbl.`StudentID`  AND ordereditemtbl.`menuItemID` = menuitemtbl.`itemID` AND orderstbl.`UserID` =  " + waiterID + "\n" + 
+"GROUP BY orderstbl.`OrderID`;"; 
+        
+        ResultSet rs = SystemManager.db.query(query); 
+         while(rs.next()){ 
+             int orderId = rs.getInt(1); 
+             String studentFullName = rs.getString(2); 
+             double price = rs.getDouble(3);
+             String paymentMethod = rs.getString(4); 
+             int userID = rs.getInt(5); 
+             int collectedTinyInt = rs.getInt(6); 
+             boolean collected = false;
+             if(collectedTinyInt == 1)
+                 collected = true; 
+             
+             ordersArr[size] = new Order(orderId, studentFullName, price, paymentMethod, userID, collected); 
+             size++; 
+        
+    }
+    } 
+    
+  
+    public void addOrder(int studentID, String paymentMethod, int userID, int collected) throws SQLException{ 
+        String query = "INSERT INTO cutos.orderstbl (`StudentID`, `PaymentMethod`, `UserID`, `Collected`) \n" +
+"	VALUES (" + studentID + ", '" + paymentMethod + "', " + userID + ", " + collected + ");"; 
+            System.out.println(query);
+             SystemManager.db.update(query);
+            
+    }
+    
 
     @Override
     public int getRowCount() {

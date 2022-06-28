@@ -13,6 +13,7 @@ public class MenuItem {
     private String itemName; 
     private String itemType; 
     private double price; 
+    private int timesSold; 
 
     public MenuItem() {
     }
@@ -29,6 +30,23 @@ public class MenuItem {
         this.itemType = itemType;
         this.price = price;
     }
+
+    public MenuItem(String itemName, String itemType, double price, int timesSold) {
+        this.itemName = itemName;
+        this.itemType = itemType;
+        this.price = price;
+        this.timesSold = timesSold;
+    }
+
+    public void setTimesSold(int timesSold) {
+        this.timesSold = timesSold;
+    }
+
+    public int getTimesSold() {
+        return timesSold;
+    }
+    
+    
     
     
 

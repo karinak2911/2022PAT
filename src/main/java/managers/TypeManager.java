@@ -36,7 +36,7 @@ public class TypeManager {
     public String[] typesForCombobox(){ 
           String[] output = new String[200];
         for (int i = 0; i < size; i++) {
-            System.out.println(typeArr[i].getTypeName());
+           
             output[i] = typeArr[i].getTypeName();
         }
         return output;
@@ -69,11 +69,5 @@ public class TypeManager {
     }
     
     
-    public String tpstring(){ 
-       String out = ""; 
-       for(int i = 0; i < size; i++){ 
-           out += typeArr[i].getTypeName() + "\n"; 
-       }
-       return out; 
-    }
+ 
 }

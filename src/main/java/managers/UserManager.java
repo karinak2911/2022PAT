@@ -165,4 +165,13 @@ public class UserManager implements TableModel {
       
     }
  
+    
+    public boolean isUserValid(String name, String password, String type){ 
+        boolean valid = false; 
+        for(int i = 0; i < size; i++){ 
+            if(userArr[i].getEmail().equalsIgnoreCase(name) && userArr[i].getPassword().equals(password) && userArr[i].getType().equalsIgnoreCase(type))
+                valid = true; 
+        }
+        return valid; 
+    }
 }

@@ -10,18 +10,18 @@ package objects;
  */
 public class Order {
     private int orderID; 
-    private String studentName; 
-    private double price; 
+    private String studentFullName; 
+    private double totalPrice; 
     private String paymentMeothod; 
-    private int userID; 
+    private int waiterID; 
     private boolean collected; 
    
 
     public Order(int orderID, String studentName, double price,String paymentMeothod ,int userID, boolean collected ) {
         this.orderID = orderID;
-        this.studentName = studentName;
-        this.price = price;
-        this.userID = userID;
+        this.studentFullName = studentName;
+        this.totalPrice = price;
+        this.waiterID = userID;
         this.paymentMeothod = paymentMeothod;
         this.collected = collected; 
     }
@@ -38,28 +38,28 @@ public class Order {
     }
 
     public String getStudentFullname() {
-        return studentName;
+        return studentFullName;
     }
 
     public void setStudentName(String studentName) {
-        this.studentName = studentName;
+        this.studentFullName = studentName;
     }
 
 
     public double getPrice() {
-        return price;
+        return totalPrice;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        this.totalPrice = price;
     }
 
     public int getUserID() {
-        return userID;
+        return waiterID;
     }
 
     public void setUser(int userId) {
-        this.userID = userId;
+        this.waiterID = userId;
     }
 
     public String getPaymentMeothod() {

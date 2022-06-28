@@ -32,6 +32,9 @@ public class OrderedItem extends MenuItem {
     }
 
 
+    public double getTotalPriceOfOrderedItem() {
+        return this.quantity * this.getPrice();
+    }
     
     
 }
