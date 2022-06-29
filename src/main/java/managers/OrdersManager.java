@@ -21,6 +21,8 @@ public class OrdersManager implements TableModel{
     
     Order[] ordersArr = new Order[200]; 
     int size = 0; 
+
+  
     private int waiterID; 
 
     public OrdersManager() throws SQLException {
@@ -81,6 +83,7 @@ public class OrdersManager implements TableModel{
     }
     } 
     
+
   
     public void addOrder(int studentID, String paymentMethod, int userID, int collected) throws SQLException{ 
         String query = "INSERT INTO cutos.orderstbl (`StudentID`, `PaymentMethod`, `UserID`, `Collected`) \n" +
@@ -88,6 +91,10 @@ public class OrdersManager implements TableModel{
             System.out.println(query);
              SystemManager.db.update(query);
             
+    }
+    
+    public int getLatestOrderID(){ 
+        return size; 
     }
     
 

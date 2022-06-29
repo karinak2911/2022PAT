@@ -63,7 +63,7 @@ public class OrderManager implements TableModel{
     public String getColumnName(int columnIndex) {
          String name ="";
         switch(columnIndex){
-            case 0 -> name = "Menu Item Name"; 
+            case 0 -> name = "Menu Item Name";
             case 1 -> name = "Menu Item Type"; 
             case 2 -> name =  "Menu Item Price"; 
             case 3 -> name = "Quantity"; 

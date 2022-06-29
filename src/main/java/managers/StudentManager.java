@@ -77,13 +77,10 @@ public class StudentManager implements TableModel{
  
 
     // removes student from array using compare to method 
-    public void deleteStudent(String name) {
-        for (int i = 0; i < size; i++) {
-            if (studentArr[i].compareTo(name) == 0) {
-                this.shiftLeft(i);
-            }
-
-        }
+    public void deleteStudent(int row) throws SQLException {
+           String query = "DELETE FROM cutos.studentstbl WHERE `studentID` = " + studentArr[row].getStudentID();
+        SystemManager.db.update(query);
+                this.shiftLeft(row);
 
         
 
@@ -95,7 +92,8 @@ public class StudentManager implements TableModel{
         String query = "INSERT INTO cutos.studentstbl (`firstName`, surname, grade, `Class`, `IDNumber`, dob) VALUES ('" + firstname + "','" + surname + "'," + grade + ",'" + sClass  + "','" + idNumber + "','" + dob.toString() + "');"; 
         System.out.println(query);
     SystemManager.db.update(query); 
-    size++; 
+studentArr[size] = new Student(firstname, surname, idNumber, sClass, grade, dob); 
+        size++; 
      // studentArr[size] = new Student(firstname, surname, idNumber, sClass, grade, dob);
        
     

@@ -4,10 +4,12 @@
  */
 package managers;
 
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import objects.MenuItem;
 import objects.OrderedItem;
 
 /**
@@ -43,6 +45,16 @@ public class OrderedItemManager implements TableModel{
         size--;
     }
     
+     
+     public void addToDatabase(int orderID) throws SQLException{ 
+         String query = "INSERT INTO `ordereditemtbl` (`orderID`, `menuItemID`, `quantity`) VALUES ("; 
+         for(int i = 0; i < size; i++){ 
+             query+= orderID + "," + orderedItemArr[i].getMenuItemID() + "," + orderedItemArr[i].getQuantity() + "\n"; 
+         }
+         query += ");"; 
+         SystemManager.db.update(query);
+         System.out.println(query);
+     }
     
     public double getTotalPriceOfOrder() {
         double total = 0;
@@ -105,12 +117,19 @@ public class OrderedItemManager implements TableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
          Object out = new Object();
         switch(columnIndex){
-            case 0 -> out = orderedItemArr[rowIndex].getMenuItemID();
-            case 1 -> out = orderedItemArr[rowIndex].getItemName();
-            case 2 -> out = orderedItemArr[rowIndex].getItemType();
-            case 3 -> out = orderedItemArr[rowIndex].getPrice();
-              case 4 -> out = orderedItemArr[rowIndex].getQuantity();
-                case 5 -> out = orderedItemArr[rowIndex].getTotalPriceOfOrderedItem();
+            case 0: 
+                out = orderedItemArr[rowIndex].getMenuItemID();          
+  break; 
+            case 1: out = orderedItemArr[rowIndex].getItemName();
+            break; 
+            case 2:  out = orderedItemArr[rowIndex].getItemType();
+            break; 
+            case 3:  out = orderedItemArr[rowIndex].getPrice();
+            break; 
+              case 4:  out = orderedItemArr[rowIndex].getQuantity();
+              break; 
+                case 5:  out = orderedItemArr[rowIndex].getTotalPriceOfOrderedItem();
+                break; 
             
         }
         
@@ -119,7 +138,30 @@ public class OrderedItemManager implements TableModel{
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-       
+       OrderedItem m = orderedItemArr[rowIndex]; 
+        switch(columnIndex){
+            case 1: 
+                orderedItemArr[rowIndex].setItemName((String)aValue);
+               
+                
+                break; 
+               
+              
+            case 2: 
+                orderedItemArr[rowIndex].setItemType((String)aValue);
+              
+          
+               break;
+            case 3 : 
+                orderedItemArr[rowIndex].setPrice(((Double) aValue).doubleValue());
+              
+     
+                break;
+                //redo
+            
+        }
+         
+        
     }
 
     @Override

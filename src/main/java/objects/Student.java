@@ -32,6 +32,17 @@ public class Student {
         this.dob = dob; 
     }
 
+    public Student(String firstname, String surname, String idNumber, String sClass, int grade, LocalDate dob) {
+        this.firstname = firstname;
+        this.surname = surname;
+        this.idNumber = idNumber;
+        this.sClass = sClass;
+        this.grade = grade;
+        this.dob = dob;
+    }
+
+    
+    
     public int getStudentID() {
         return studentID;
     }

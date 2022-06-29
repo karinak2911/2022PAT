@@ -43,6 +43,38 @@ public class UserManager implements TableModel {
     }
     
     
+    public void addUser(String firstName, String lastname, String type, String email, String password) throws SQLException{ 
+         
+        String query = " INSERT INTO cutos.usertbl ( `firstName`, `surname`, `workerType`, `emailAdress`, `password`) VALUES ( '" + firstName + "' , '"  + lastname + "' , '"  + type + "' , '"  + email + "' , '"  + password + "');";  
+        System.out.println(query);
+       SystemManager.db.update(query);
+        
+       userArr[size] = new User(firstName, lastname, type, email, password); 
+       size++; 
+    }
+    
+    public void deleteUser(int row) throws SQLException{ 
+         String query = "DELETE FROM cutos.usertbl WHERE `userID` = " + userArr[row].getUserID();
+        SystemManager.db.update(query);
+                this.shiftLeft(row);
+              
+    }
+    
+          
+
+    
+    
+
+          
+    private void shiftLeft(int index) {
+        for (int i = index; i < size; i++) {
+            userArr[i] = userArr[i + 1];
+        }
+        size--;
+    }
+    
+    
+    
 //    public Object[][] getUsersForTable(){ 
 //        Object[][] out = new Object[size][6];
 //          for (int row = 0; row < size; row++) {
