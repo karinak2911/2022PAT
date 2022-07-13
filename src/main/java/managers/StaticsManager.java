@@ -22,12 +22,14 @@ public class StaticsManager implements TableModel{
     int size = 0;
     
     
-    public StaticsManager() throws SQLException{ 
+    public StaticsManager(String orderBy) throws SQLException{ 
+        
         String query = "SELECT menuitemtbl.`itemName`, typetbl.`typeName`, menuitemtbl.`itemPrice`, SUM(ordereditemtbl.quantity) AS times_sold\n" +
 " FROM ordereditemtbl, typetbl, menuitemtbl\n" +
 "WHERE typetbl.`typeId` = menuitemtbl.`typeID` AND ordereditemtbl.`menuItemID` = menuitemtbl.`itemID`\n" +
 "GROUP BY menuitemtbl.`itemID`"
-                + "ORDER BY times_sold DESC;"; 
+                + "ORDER BY times_sold " + orderBy + ";"; 
+        System.out.println(query);
         ResultSet rs = SystemManager.db.query(query); 
          while(rs.next()){ 
              String menuItemName = rs.getString(1); 

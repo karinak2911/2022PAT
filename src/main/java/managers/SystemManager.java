@@ -24,24 +24,23 @@ public class SystemManager {
     public static StaticsManager stm;
     public static TypeManager tm;
     public static OrderManager orm;
-    public static OrderedItemManager oim; 
+    public static OrderedItemManager oim;
 
     public SystemManager() {
         try {
             db = new DB();
-            System.out.println("SM: DB object created"); 
+            System.out.println("SM: DB object created");
             sm = new StudentManager();
             System.out.println("SM: Students initialised");
             um = new UserManager();
             System.out.println("SM: users initialised");
+            oim = new OrderedItemManager();
             om = new OrdersManager();
             System.out.println("SM: orders initialised");
-            stm = new StaticsManager();
+            stm = new StaticsManager("DESC");
             System.out.println("SM: order items  initialised");
             tm = new TypeManager();
             System.out.println("SM: type items  initialised");
-            oim = new OrderedItemManager();
-            System.out.println("SM: ordered items  initialised");
 
         } catch (ClassNotFoundException ex) {
             System.out.println("SM: Database driver could not be loaded");
@@ -57,31 +56,35 @@ public class SystemManager {
         orm = new OrderManager(id);
         System.out.println("SM: order items  initialised");
     }
+
     public void initialiseMenuManagerToPlaceOrder(String type) throws SQLException {
         mm = new MenuManager(type);
         System.out.println("SM: order items  initialised");
     }
-    
+
     public void initialiseMenuManager() throws SQLException, ClassNotFoundException {
         mm = new MenuManager();
-            System.out.println("SM: Memu items initialised");
+        System.out.println("SM: Memu items initialised");
     }
-    
-    public void initialiseAllOrders() throws SQLException{ 
-        om = new OrdersManager();
-            System.out.println("SM: orders initialised");
-    }
-    
-    public void initialiseSpecificWaiterOrders(int waiterID) throws SQLException{ 
-        om = new OrdersManager(waiterID);
-            System.out.println("SM: orders initialised");
-    }
-    
-   public void initialiseStudentManagerForGrade(int grade) throws SQLException{ 
-       sm = new StudentManager(grade); 
-   }
-    
 
-    
+    public void initialiseAllOrders() throws SQLException {
+        om = new OrdersManager();
+        System.out.println("SM: orders initialised");
+    }
+
+    public void initialiseSpecificWaiterOrders(int waiterID) throws SQLException {
+        om = new OrdersManager(waiterID);
+        System.out.println("SM: orders initialised");
+    }
+
+    public void initialiseStudentManagerForGrade(int grade) throws SQLException {
+        sm = new StudentManager(grade);
+    }
+
+    public void initialiseStatsManager(String orderBy) throws SQLException {
+        stm = new StaticsManager(orderBy);
+        System.out.println("SM: order items  initialised");
+
+    }
 
 }

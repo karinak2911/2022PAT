@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import managers.MenuManager;
 import managers.OrderManager;
 import managers.SystemManager;
+import objects.MenuItem;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -38,7 +39,7 @@ public class AdminUI extends javax.swing.JFrame {
     public AdminUI() throws ClassNotFoundException, SQLException {
         initComponents();
         systemManager = new SystemManager();
-        DOBdatePicker.setDateToToday();
+        studentDOBdatePicker.setDateToToday();
 
         this.populateOrdersTable();
     this.populateStatsTable();
@@ -64,6 +65,8 @@ this.setOrderTabelSelectionModel();
     public void setActionCommands(){ 
         waiterradioButton.setActionCommand("waiter");
         adminRadioButton.setActionCommand("admin");
+        mostSoldradioButton.setActionCommand("DESC");
+        leastSoldRadioButton.setActionCommand("ASC");
     }
     public void populateStudentTable() {
 
@@ -118,7 +121,9 @@ this.setOrderTabelSelectionModel();
 
     }
     
-    public void populateStatsTable(){ 
+    public void populateStatsTable() throws SQLException{ 
+        String orderBy = soldButtonGroup.getSelection().getActionCommand(); 
+        systemManager.initialiseStatsManager(orderBy);
         statsTable.setModel(systemManager.stm); 
     }
 
@@ -156,7 +161,7 @@ this.setOrderTabelSelectionModel();
         jLabel24 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         orderedItemtable = new javax.swing.JTable();
-        viewSalesPanel = new javax.swing.JPanel();
+        viewStatsPanel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         statsTable = new javax.swing.JTable();
@@ -188,13 +193,14 @@ this.setOrderTabelSelectionModel();
         typenameTextField = new javax.swing.JTextField();
         deleteTypeButton = new javax.swing.JButton();
         addTypeButton = new javax.swing.JButton();
+        menuErrorMsgLabel = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         menuTable = new javax.swing.JTable();
         jLabel28 = new javax.swing.JLabel();
         deleteItemButton = new javax.swing.JButton();
-        manageWorkersPanel = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        manageEmployeesPanel = new javax.swing.JPanel();
+        menageemployeesPanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
         jLabel15 = new javax.swing.JLabel();
@@ -206,15 +212,15 @@ this.setOrderTabelSelectionModel();
         jLabel25 = new javax.swing.JLabel();
         employeelastNameTextField = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        emailtextField = new javax.swing.JTextField();
+        employeeemailtextField = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        passwordTextField = new javax.swing.JTextField();
+        employeepasswordTextField = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
         waiterradioButton = new javax.swing.JRadioButton();
         adminRadioButton = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
+        FAQsPanel = new javax.swing.JPanel();
         manageStudenstPanel = new javax.swing.JPanel();
-        errorMsgLabel = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         studentPanel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -223,21 +229,21 @@ this.setOrderTabelSelectionModel();
         studentsTable = new javax.swing.JTable();
         jPanel10 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        firstNameTextField = new javax.swing.JTextField();
+        studentFirstNameTextField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        surnameTextField = new javax.swing.JTextField();
+        studentSurnameTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        gradeComboBox = new javax.swing.JComboBox<>();
+        studentgradeComboBox = new javax.swing.JComboBox<>();
         jLabel20 = new javax.swing.JLabel();
-        IDtextField = new javax.swing.JTextField();
+        studentIDtextField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        classComboBox = new javax.swing.JComboBox<>();
+        studentclassComboBox = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
-        DOBdatePicker = new com.github.lgooddatepicker.components.DatePicker();
+        studentDOBdatePicker = new com.github.lgooddatepicker.components.DatePicker();
         addStudentButton = new javax.swing.JButton();
+        studentErrorMsgLabel = new javax.swing.JLabel();
         deleteStudentButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        FAQsPanel = new javax.swing.JPanel();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -371,6 +377,11 @@ this.setOrderTabelSelectionModel();
 
         soldButtonGroup.add(leastSoldRadioButton);
         leastSoldRadioButton.setText("Least Sold");
+        leastSoldRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leastSoldRadioButtonActionPerformed(evt);
+            }
+        });
 
         jLabel14.setText("Type");
 
@@ -391,85 +402,85 @@ this.setOrderTabelSelectionModel();
 
         viewSalesButton.setText("VIEW SALES ");
 
-        javax.swing.GroupLayout viewSalesPanelLayout = new javax.swing.GroupLayout(viewSalesPanel);
-        viewSalesPanel.setLayout(viewSalesPanelLayout);
-        viewSalesPanelLayout.setHorizontalGroup(
-            viewSalesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(viewSalesPanelLayout.createSequentialGroup()
-                .addGroup(viewSalesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(viewSalesPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout viewStatsPanelLayout = new javax.swing.GroupLayout(viewStatsPanel);
+        viewStatsPanel.setLayout(viewStatsPanelLayout);
+        viewStatsPanelLayout.setHorizontalGroup(
+            viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
                         .addGap(254, 254, 254)
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(viewSalesPanelLayout.createSequentialGroup()
+                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
                         .addGap(63, 63, 63)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(viewSalesPanelLayout.createSequentialGroup()
+                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jLabel13)
                         .addGap(173, 173, 173)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(viewSalesPanelLayout.createSequentialGroup()
+                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(viewSalesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(mostSoldradioButton)
                             .addComponent(leastSoldRadioButton))
                         .addGap(135, 135, 135)
-                        .addGroup(viewSalesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(viewSalesPanelLayout.createSequentialGroup()
+                        .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(viewStatsPanelLayout.createSequentialGroup()
                                 .addComponent(allCheckbox)
                                 .addGap(29, 29, 29)
                                 .addComponent(snackCheckbox))
                             .addComponent(SaladCheckBox)
-                            .addGroup(viewSalesPanelLayout.createSequentialGroup()
-                                .addGroup(viewSalesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                                .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(sandwichtextBox)
                                     .addComponent(jCheckBox2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(viewSalesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(viewSalesPanelLayout.createSequentialGroup()
+                                .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
                                         .addComponent(wrapCheckBox)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 276, Short.MAX_VALUE)
                                         .addComponent(viewSalesButton))
                                     .addComponent(drinkCheckBox))))))
                 .addGap(38, 38, 38))
         );
-        viewSalesPanelLayout.setVerticalGroup(
-            viewSalesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(viewSalesPanelLayout.createSequentialGroup()
+        viewStatsPanelLayout.setVerticalGroup(
+            viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viewStatsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel12)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(viewSalesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(viewSalesPanelLayout.createSequentialGroup()
+                .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
                         .addGap(51, 51, 51)
-                        .addGroup(viewSalesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
                             .addComponent(jLabel14))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(viewSalesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(mostSoldradioButton)
                             .addComponent(allCheckbox)
                             .addComponent(snackCheckbox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(viewSalesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(leastSoldRadioButton)
                             .addComponent(sandwichtextBox)
                             .addComponent(drinkCheckBox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(viewSalesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jCheckBox2)
                             .addComponent(wrapCheckBox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SaladCheckBox)
-                        .addContainerGap(841, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewSalesPanelLayout.createSequentialGroup()
+                        .addContainerGap(855, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewStatsPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(viewSalesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
 
-        adminTabbedPan.addTab("View Stats ", viewSalesPanel);
+        adminTabbedPan.addTab("View Stats ", viewStatsPanel);
 
         jLabel7.setText("MENU");
 
@@ -481,9 +492,32 @@ this.setOrderTabelSelectionModel();
 
         jLabel9.setText("Item Name: ");
 
+        itemNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemNameTextFieldActionPerformed(evt);
+            }
+        });
+        itemNameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                itemNameTextFieldKeyTyped(evt);
+            }
+        });
+
         jLabel10.setText("Item Type: ");
 
         jLabel11.setText("Price: ");
+
+        itempricetextField.setText("0");
+        itempricetextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itempricetextFieldActionPerformed(evt);
+            }
+        });
+        itempricetextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                itempricetextFieldKeyTyped(evt);
+            }
+        });
 
         addItemtButton.setText("ADD ITEM");
         addItemtButton.addActionListener(new java.awt.event.ActionListener() {
@@ -527,30 +561,39 @@ this.setOrderTabelSelectionModel();
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(itemNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(typenameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(addTypeButton))
+                                .addComponent(itemNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(itemTypesCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel10)
                                 .addGap(18, 18, 18)
-                                .addComponent(deleteTypeButton))))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(35, 35, 35)
-                        .addComponent(itempricetextField, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(typenameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(addTypeButton))
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(itemTypesCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(deleteTypeButton)))))
+                        .addContainerGap(196, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(35, 35, 35)
+                                .addComponent(itempricetextField, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(addItemtButton)))
+                        .addGap(25, 25, 25))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(addItemtButton)
-                .addGap(25, 25, 25))
+                .addComponent(menuErrorMsgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -568,11 +611,13 @@ this.setOrderTabelSelectionModel();
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(typenameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addTypeButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(itempricetextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
-                .addGap(51, 51, 51)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(menuErrorMsgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addItemtButton)
                 .addGap(23, 23, 23))
         );
@@ -581,17 +626,17 @@ this.setOrderTabelSelectionModel();
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(333, Short.MAX_VALUE))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jLabel27.setText("MENU ");
@@ -650,7 +695,7 @@ this.setOrderTabelSelectionModel();
                         .addGap(35, 35, 35)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(manageMenuPanelLayout.createSequentialGroup()
-                        .addGap(90, 90, 90)
+                        .addGap(116, 116, 116)
                         .addComponent(jLabel28)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMenuPanelLayout.createSequentialGroup()
@@ -661,7 +706,7 @@ this.setOrderTabelSelectionModel();
                         .addGap(137, 137, 137))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageMenuPanelLayout.createSequentialGroup()
                         .addComponent(deleteItemButton)
-                        .addGap(151, 151, 151))))
+                        .addGap(140, 140, 140))))
         );
         manageMenuPanelLayout.setVerticalGroup(
             manageMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -671,13 +716,13 @@ this.setOrderTabelSelectionModel();
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(deleteItemButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(jLabel28)
-                .addGap(45, 45, 45)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(manageMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(281, 281, 281)
@@ -687,12 +732,12 @@ this.setOrderTabelSelectionModel();
 
         adminTabbedPan.addTab("Manage Menu", manageMenuPanel);
 
-        manageWorkersPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        manageEmployeesPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                manageWorkersPanelMouseClicked(evt);
+                manageEmployeesPanelMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                manageWorkersPanelMouseEntered(evt);
+                manageEmployeesPanelMouseEntered(evt);
             }
         });
 
@@ -779,12 +824,12 @@ this.setOrderTabelSelectionModel();
                             .addContainerGap()
                             .addComponent(jLabel17)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(emailtextField, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(employeeemailtextField, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel11Layout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jLabel18)
                             .addGap(22, 22, 22)
-                            .addComponent(passwordTextField)))
+                            .addComponent(employeepasswordTextField)))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel26)
@@ -808,11 +853,11 @@ this.setOrderTabelSelectionModel();
                 .addGap(18, 18, 18)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
-                    .addComponent(emailtextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(employeeemailtextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
-                    .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(employeepasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26)
@@ -825,38 +870,38 @@ this.setOrderTabelSelectionModel();
 
         jLabel8.setText("ADD EMPLOYEE ");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout menageemployeesPanelLayout = new javax.swing.GroupLayout(menageemployeesPanel);
+        menageemployeesPanel.setLayout(menageemployeesPanelLayout);
+        menageemployeesPanelLayout.setHorizontalGroup(
+            menageemployeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menageemployeesPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addGap(174, 174, 174)
                 .addComponent(deletedEmpployeeButton)
                 .addGap(55, 55, 55))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(menageemployeesPanelLayout.createSequentialGroup()
+                .addGroup(menageemployeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menageemployeesPanelLayout.createSequentialGroup()
                         .addGap(125, 125, 125)
                         .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(menageemployeesPanelLayout.createSequentialGroup()
                         .addGap(281, 281, 281)
                         .addComponent(jLabel15))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(menageemployeesPanelLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(81, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        menageemployeesPanelLayout.setVerticalGroup(
+            menageemployeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menageemployeesPanelLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(menageemployeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deletedEmpployeeButton)
                     .addComponent(jLabel8))
                 .addGap(38, 38, 38)
@@ -864,22 +909,35 @@ this.setOrderTabelSelectionModel();
                 .addGap(30, 30, 30))
         );
 
-        javax.swing.GroupLayout manageWorkersPanelLayout = new javax.swing.GroupLayout(manageWorkersPanel);
-        manageWorkersPanel.setLayout(manageWorkersPanelLayout);
-        manageWorkersPanelLayout.setHorizontalGroup(
-            manageWorkersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(manageWorkersPanelLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout manageEmployeesPanelLayout = new javax.swing.GroupLayout(manageEmployeesPanel);
+        manageEmployeesPanel.setLayout(manageEmployeesPanelLayout);
+        manageEmployeesPanelLayout.setHorizontalGroup(
+            manageEmployeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(manageEmployeesPanelLayout.createSequentialGroup()
+                .addComponent(menageemployeesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-        manageWorkersPanelLayout.setVerticalGroup(
-            manageWorkersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(manageWorkersPanelLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 599, Short.MAX_VALUE))
+        manageEmployeesPanelLayout.setVerticalGroup(
+            manageEmployeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(manageEmployeesPanelLayout.createSequentialGroup()
+                .addComponent(menageemployeesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 613, Short.MAX_VALUE))
         );
 
-        adminTabbedPan.addTab("Manage employees", manageWorkersPanel);
+        adminTabbedPan.addTab("Manage employees", manageEmployeesPanel);
+
+        javax.swing.GroupLayout FAQsPanelLayout = new javax.swing.GroupLayout(FAQsPanel);
+        FAQsPanel.setLayout(FAQsPanelLayout);
+        FAQsPanelLayout.setHorizontalGroup(
+            FAQsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 747, Short.MAX_VALUE)
+        );
+        FAQsPanelLayout.setVerticalGroup(
+            FAQsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1178, Short.MAX_VALUE)
+        );
+
+        adminTabbedPan.addTab("FAQS", FAQsPanel);
 
         manageStudenstPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -891,7 +949,7 @@ this.setOrderTabelSelectionModel();
         studentPanel.setLayout(studentPanelLayout);
         studentPanelLayout.setHorizontalGroup(
             studentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 686, Short.MAX_VALUE)
+            .addGap(0, 518, Short.MAX_VALUE)
         );
         studentPanelLayout.setVerticalGroup(
             studentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -930,50 +988,50 @@ this.setOrderTabelSelectionModel();
 
         jLabel3.setText("Name: ");
 
-        firstNameTextField.addActionListener(new java.awt.event.ActionListener() {
+        studentFirstNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstNameTextFieldActionPerformed(evt);
+                studentFirstNameTextFieldActionPerformed(evt);
             }
         });
-        firstNameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+        studentFirstNameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                firstNameTextFieldKeyTyped(evt);
+                studentFirstNameTextFieldKeyTyped(evt);
             }
         });
 
         jLabel4.setText("Suname");
 
-        surnameTextField.addActionListener(new java.awt.event.ActionListener() {
+        studentSurnameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                surnameTextFieldActionPerformed(evt);
+                studentSurnameTextFieldActionPerformed(evt);
             }
         });
-        surnameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+        studentSurnameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                surnameTextFieldKeyTyped(evt);
+                studentSurnameTextFieldKeyTyped(evt);
             }
         });
 
         jLabel5.setText("Grade: ");
 
-        gradeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-        gradeComboBox.addActionListener(new java.awt.event.ActionListener() {
+        studentgradeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        studentgradeComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gradeComboBoxActionPerformed(evt);
+                studentgradeComboBoxActionPerformed(evt);
             }
         });
 
         jLabel20.setText("ID number: ");
 
-        IDtextField.addKeyListener(new java.awt.event.KeyAdapter() {
+        studentIDtextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                IDtextFieldKeyTyped(evt);
+                studentIDtextFieldKeyTyped(evt);
             }
         });
 
         jLabel6.setText("Class:");
 
-        classComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "R", "E", "D", "A", "M" }));
+        studentclassComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "R", "E", "D", "A", "M" }));
 
         jLabel22.setText("Date of birth:");
 
@@ -989,37 +1047,39 @@ this.setOrderTabelSelectionModel();
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel10Layout.createSequentialGroup()
-                                        .addComponent(gradeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(34, 34, 34)
-                                        .addComponent(jLabel6)
-                                        .addGap(28, 28, 28)
-                                        .addComponent(classComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(surnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(studentgradeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(jLabel6)
+                                .addGap(28, 28, 28)
+                                .addComponent(studentclassComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(studentFirstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(studentSurnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 211, Short.MAX_VALUE))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(studentDOBdatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addComponent(jLabel20)
                                 .addGap(18, 18, 18)
-                                .addComponent(IDtextField, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel22)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(DOBdatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
-                        .addComponent(addStudentButton)))
+                                .addComponent(studentIDtextField, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addStudentButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(studentErrorMsgLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -1028,30 +1088,34 @@ this.setOrderTabelSelectionModel();
                 .addGap(19, 19, 19)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(studentFirstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(surnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(gradeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(classComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(IDtextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel22)
-                    .addComponent(DOBdatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(addStudentButton)
-                .addContainerGap())
+                    .addComponent(studentSurnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(studentgradeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(studentclassComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(studentIDtextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel22)
+                            .addComponent(studentDOBdatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(studentErrorMsgLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(addStudentButton)
+                        .addContainerGap())))
         );
 
         deleteStudentButton.setText("DELETE STUDENT");
@@ -1069,9 +1133,12 @@ this.setOrderTabelSelectionModel();
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE))
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1079,14 +1146,11 @@ this.setOrderTabelSelectionModel();
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(148, 148, 148))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addComponent(deleteStudentButton)
-                        .addGap(57, 57, 57))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(121, 121, 121))))
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1))
+                        .addGap(121, 121, 121))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addComponent(deleteStudentButton)
+                        .addGap(26, 26, 26))))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1094,14 +1158,14 @@ this.setOrderTabelSelectionModel();
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(deleteStudentButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addGap(38, 38, 38))
         );
 
         javax.swing.GroupLayout manageStudenstPanelLayout = new javax.swing.GroupLayout(manageStudenstPanel);
@@ -1113,12 +1177,11 @@ this.setOrderTabelSelectionModel();
                 .addComponent(jLabel23))
             .addGroup(manageStudenstPanelLayout.createSequentialGroup()
                 .addGroup(manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(manageStudenstPanelLayout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(studentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(errorMsgLabel))
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(67, 67, 67)))
                 .addContainerGap())
         );
         manageStudenstPanelLayout.setVerticalGroup(
@@ -1127,31 +1190,12 @@ this.setOrderTabelSelectionModel();
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel23)
-                .addGroup(manageStudenstPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(manageStudenstPanelLayout.createSequentialGroup()
-                        .addGap(510, 510, 510)
-                        .addComponent(errorMsgLabel)
-                        .addGap(58, 58, 58))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageStudenstPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(studentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25))))
+                .addGap(59, 59, 59)
+                .addComponent(studentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
 
         adminTabbedPan.addTab("Manage Students", manageStudenstPanel);
-
-        javax.swing.GroupLayout FAQsPanelLayout = new javax.swing.GroupLayout(FAQsPanel);
-        FAQsPanel.setLayout(FAQsPanelLayout);
-        FAQsPanelLayout.setHorizontalGroup(
-            FAQsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 747, Short.MAX_VALUE)
-        );
-        FAQsPanelLayout.setVerticalGroup(
-            FAQsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1164, Short.MAX_VALUE)
-        );
-
-        adminTabbedPan.addTab("FAQS", FAQsPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1170,16 +1214,35 @@ this.setOrderTabelSelectionModel();
     }// </editor-fold>//GEN-END:initComponents
 
     private void addItemtButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemtButtonActionPerformed
-        try {
+
             // TODO add your handling code here:
 
 // gets the name, type and price of new mneu item 
             String name = itemNameTextField.getText();
             String type = (String) (itemTypesCombobox.getSelectedItem());
-            double price = Double.parseDouble(itempricetextField.getText());
+            double price = 0; 
+            price = Double.parseDouble(itempricetextField.getText());
+            
+            
+             if (name.isBlank() || !MenuItem.isValidMenuitemName(name)) {
+            itemNameTextField.setBackground(Color.red);
+            menuErrorMsgLabel.setText("Menu Item Name not valid");
+            menuErrorMsgLabel.setForeground(Color.red);
 
-            //adds the item to the array 
-            systemManager.mm.add(name, type, price);
+        } else if (price == 0) {
+            itempricetextField.setBackground(Color.red);
+            menuErrorMsgLabel.setText("Price not valid");
+            menuErrorMsgLabel.setForeground(Color.red);
+       
+
+        } else {
+
+                try {
+                    //adds the item to the array
+                    systemManager.mm.add(name, type, price);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             itemNameTextField.setText("");
             itempricetextField.setText("");
             itemTypeComboBox.setSelectedIndex(1);
@@ -1188,65 +1251,68 @@ this.setOrderTabelSelectionModel();
                 
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }   catch (SQLException ex) {
+                    Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        
+        JOptionPane.showMessageDialog(null, "Menu Item successfully added");
+        } 
     }//GEN-LAST:event_addItemtButtonActionPerformed
 
-    private void firstNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_firstNameTextFieldActionPerformed
+    private void studentFirstNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentFirstNameTextFieldActionPerformed
+        // TODO add your handling code here:]
+              studentErrorMsgLabel.setText("");
+                 studentFirstNameTextField.setBackground(Color.white);
+    }//GEN-LAST:event_studentFirstNameTextFieldActionPerformed
 
-    private void gradeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradeComboBoxActionPerformed
+    private void studentgradeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentgradeComboBoxActionPerformed
         // TODO add your handling code here:
-        errorMsgLabel.setText("");
-    }//GEN-LAST:event_gradeComboBoxActionPerformed
+        studentErrorMsgLabel.setText("");
+    }//GEN-LAST:event_studentgradeComboBoxActionPerformed
 
-    private void IDtextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IDtextFieldKeyTyped
+    private void studentIDtextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_studentIDtextFieldKeyTyped
         // TODO add your handling code here:
-        IDtextField.setBackground(Color.white);
-        errorMsgLabel.setText("");
+        studentIDtextField.setBackground(Color.white);
+        studentErrorMsgLabel.setText("");
 
-    }//GEN-LAST:event_IDtextFieldKeyTyped
+    }//GEN-LAST:event_studentIDtextFieldKeyTyped
 
     private void addStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentButtonActionPerformed
         // TODO add your handling code here:
 
-        String firstName = firstNameTextField.getText();
-        String surname = surnameTextField.getText();
-        String idNumber = IDtextField.getText();
-        String sClass = (String) (classComboBox.getSelectedItem());
+        String firstName = studentFirstNameTextField.getText();
+        String surname = studentSurnameTextField.getText();
+        String idNumber = studentIDtextField.getText();
+        String sClass = (String) (studentclassComboBox.getSelectedItem());
         int grade = 0;
-        String gradeStr = (String) gradeComboBox.getSelectedItem();
-        LocalDate dob = DOBdatePicker.getDate();
+        String gradeStr = (String) studentgradeComboBox.getSelectedItem();
+        LocalDate dob = studentDOBdatePicker.getDate();
 
         //check if id
         if (firstName.isBlank() || !Student.isValidFirstName(firstName)) {
-            firstNameTextField.setBackground(Color.red);
-            errorMsgLabel.setText("First name not valid");
-            errorMsgLabel.setForeground(Color.red);
+            studentFirstNameTextField.setBackground(Color.red);
+            studentErrorMsgLabel.setText("First name not valid");
+            studentErrorMsgLabel.setForeground(Color.red);
 
         } else if (surname.isBlank() || !Student.isValidLastName(surname)) {
-            surnameTextField.setBackground(Color.red);
-            errorMsgLabel.setText("Surname not valid");
-            errorMsgLabel.setForeground(Color.red);
+            studentSurnameTextField.setBackground(Color.red);
+            studentErrorMsgLabel.setText("Surname not valid");
+            studentErrorMsgLabel.setForeground(Color.red);
         } else if (idNumber.isBlank() || !Student.isValidID(idNumber)) {
-            IDtextField.setBackground(Color.red);
-            errorMsgLabel.setText("ID num not valid");
-            errorMsgLabel.setForeground(Color.red);
+            studentIDtextField.setBackground(Color.red);
+            studentErrorMsgLabel.setText("ID num not valid");
+            studentErrorMsgLabel.setForeground(Color.red);
         } else if (sClass.compareToIgnoreCase("-") == 0) {
-            errorMsgLabel.setText("Please select a class");
-            errorMsgLabel.setForeground(Color.red);
+            studentErrorMsgLabel.setText("Please select a class");
+            studentErrorMsgLabel.setForeground(Color.red);
         } else if (gradeStr.equals("-")) {
-            errorMsgLabel.setText("Please select a grade");
-            errorMsgLabel.setForeground(Color.red);
+            studentErrorMsgLabel.setText("Please select a grade");
+            studentErrorMsgLabel.setForeground(Color.red);
         } else if (!Student.isValidDOB(idNumber, dob)) {
-            errorMsgLabel.setText("Birthdate does not match id");
-            DOBdatePicker.setBackground(Color.red);
-            errorMsgLabel.setForeground(Color.red);
+            studentErrorMsgLabel.setText("Birthdate does not match id");
+            studentDOBdatePicker.setBackground(Color.red);
+            studentErrorMsgLabel.setForeground(Color.red);
 
         } else {
 
@@ -1255,12 +1321,12 @@ this.setOrderTabelSelectionModel();
                 JOptionPane.showMessageDialog(null, "Student successfully added");
                 systemManager.sm.addStudent(idNumber, firstName, surname, sClass, grade, dob);
 
-                firstNameTextField.setText("");
-                surnameTextField.setText("");
-                IDtextField.setText("");
-                gradeComboBox.setSelectedIndex(0);
-                DOBdatePicker.setDateToToday();
-                classComboBox.setSelectedIndex(0);
+                studentFirstNameTextField.setText("");
+                studentSurnameTextField.setText("");
+                studentIDtextField.setText("");
+                studentgradeComboBox.setSelectedIndex(0);
+                studentDOBdatePicker.setDateToToday();
+                studentclassComboBox.setSelectedIndex(0);
 
                 this.populateStudentTable();
             } catch (SQLException ex) {
@@ -1269,27 +1335,27 @@ this.setOrderTabelSelectionModel();
         }
     }//GEN-LAST:event_addStudentButtonActionPerformed
 
-    private void surnameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surnameTextFieldActionPerformed
+    private void studentSurnameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentSurnameTextFieldActionPerformed
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_surnameTextFieldActionPerformed
+    }//GEN-LAST:event_studentSurnameTextFieldActionPerformed
 
-    private void firstNameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_firstNameTextFieldKeyTyped
+    private void studentFirstNameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_studentFirstNameTextFieldKeyTyped
         // TODO add your handling code here:
-        firstNameTextField.setBackground(Color.white);
-        errorMsgLabel.setText("");
-    }//GEN-LAST:event_firstNameTextFieldKeyTyped
+        studentFirstNameTextField.setBackground(Color.white);
+        studentErrorMsgLabel.setText("");
+    }//GEN-LAST:event_studentFirstNameTextFieldKeyTyped
 
-    private void surnameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_surnameTextFieldKeyTyped
+    private void studentSurnameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_studentSurnameTextFieldKeyTyped
         // TODO add your handling code here:
-        surnameTextField.setBackground(Color.white);
-        errorMsgLabel.setText("");
-    }//GEN-LAST:event_surnameTextFieldKeyTyped
+        studentSurnameTextField.setBackground(Color.white);
+        studentErrorMsgLabel.setText("");
+    }//GEN-LAST:event_studentSurnameTextFieldKeyTyped
 
     private void DOBdatePickerPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_DOBdatePickerPropertyChange
         // TODO add your handling code here:  
-        DOBdatePicker.setBackground(Color.white);
-        errorMsgLabel.setText("");
+        studentDOBdatePicker.setBackground(Color.white);
+        studentErrorMsgLabel.setText("");
 
     }//GEN-LAST:event_DOBdatePickerPropertyChange
 
@@ -1319,7 +1385,7 @@ this.setOrderTabelSelectionModel();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+JOptionPane.showMessageDialog(null, "Menu Item successfully deleted");
 
     }//GEN-LAST:event_deleteItemButtonActionPerformed
 
@@ -1345,6 +1411,8 @@ this.setOrderTabelSelectionModel();
             Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.populateTypeComboBox();
+        typenameTextField.setText("");
+        JOptionPane.showMessageDialog(null, "Menu item type successfully added");
     }//GEN-LAST:event_addTypeButtonActionPerformed
 
     private void typenameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typenameTextFieldActionPerformed
@@ -1359,7 +1427,7 @@ this.setOrderTabelSelectionModel();
             Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.populateTypeComboBox();
-   
+   JOptionPane.showMessageDialog(null, "Menu item type successfully removed");
 
 
     }//GEN-LAST:event_deleteTypeButtonActionPerformed
@@ -1368,13 +1436,13 @@ this.setOrderTabelSelectionModel();
         // TODO add your handling code here:
     }//GEN-LAST:event_itemTypesComboboxActionPerformed
 
-    private void manageWorkersPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageWorkersPanelMouseEntered
+    private void manageEmployeesPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageEmployeesPanelMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_manageWorkersPanelMouseEntered
+    }//GEN-LAST:event_manageEmployeesPanelMouseEntered
 
-    private void manageWorkersPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageWorkersPanelMouseClicked
+    private void manageEmployeesPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageEmployeesPanelMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_manageWorkersPanelMouseClicked
+    }//GEN-LAST:event_manageEmployeesPanelMouseClicked
 
     private void waiterradioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_waiterradioButtonActionPerformed
         // TODO add your handling code here:
@@ -1388,8 +1456,8 @@ this.setOrderTabelSelectionModel();
         // TODO add your handling code here:
         String firstname = employeeFirstnameTextField.getText(); 
         String surname = employeelastNameTextField.getText(); 
-        String email = emailtextField.getText(); 
-        String password = passwordTextField.getText(); 
+        String email = employeeemailtextField.getText(); 
+        String password = employeepasswordTextField.getText(); 
         String type = usertypeButtonGroup.getSelection().getActionCommand(); 
         
         try {
@@ -1401,10 +1469,10 @@ this.setOrderTabelSelectionModel();
         this.populateUserTable();//UI Is not being updated 
         employeeFirstnameTextField.setText("");
         employeelastNameTextField.setText("");
-        emailtextField.setText("");
-        passwordTextField.setText("");
+        employeeemailtextField.setText("");
+        employeepasswordTextField.setText("");
         waiterradioButton.setSelected(true);
-        
+        JOptionPane.showMessageDialog(null, "Employee successfully added");
         
     }//GEN-LAST:event_addEmployeeButtonActionPerformed
 
@@ -1417,6 +1485,7 @@ this.setOrderTabelSelectionModel();
             Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.populateUserTable();
+        JOptionPane.showMessageDialog(null, "Employye successfully deleted");
     }//GEN-LAST:event_deletedEmpployeeButtonActionPerformed
 
     private void deleteStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStudentButtonActionPerformed
@@ -1427,7 +1496,35 @@ this.setOrderTabelSelectionModel();
         } catch (SQLException ex) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        JOptionPane.showMessageDialog(null, "Student successfully deleted");
     }//GEN-LAST:event_deleteStudentButtonActionPerformed
+
+    private void itemNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNameTextFieldActionPerformed
+        // TODO add your handling code here:
+      
+    }//GEN-LAST:event_itemNameTextFieldActionPerformed
+
+    private void itempricetextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itempricetextFieldActionPerformed
+        // TODO add your handling code here:
+    
+    }//GEN-LAST:event_itempricetextFieldActionPerformed
+
+    private void itemNameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemNameTextFieldKeyTyped
+        // TODO add your handling code here:
+          menuErrorMsgLabel.setText("");
+        itemNameTextField.setBackground(Color.white);
+    }//GEN-LAST:event_itemNameTextFieldKeyTyped
+
+    private void itempricetextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itempricetextFieldKeyTyped
+        // TODO add your handling code here:
+             menuErrorMsgLabel.setText("");
+        itempricetextField.setBackground(Color.white);
+    }//GEN-LAST:event_itempricetextFieldKeyTyped
+
+    private void leastSoldRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leastSoldRadioButtonActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_leastSoldRadioButtonActionPerformed
 
     private void setOrderTabelSelectionModel() {
         ordersTable.setRowSelectionAllowed(true);
@@ -1493,9 +1590,7 @@ this.setOrderTabelSelectionModel();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.github.lgooddatepicker.components.DatePicker DOBdatePicker;
     private javax.swing.JPanel FAQsPanel;
-    private javax.swing.JTextField IDtextField;
     private javax.swing.JCheckBox SaladCheckBox;
     private javax.swing.JButton addEmployeeButton;
     private javax.swing.JButton addItemtButton;
@@ -1504,19 +1599,16 @@ this.setOrderTabelSelectionModel();
     private javax.swing.JRadioButton adminRadioButton;
     private javax.swing.JTabbedPane adminTabbedPan;
     private javax.swing.JCheckBox allCheckbox;
-    private javax.swing.JComboBox<String> classComboBox;
     private javax.swing.ButtonGroup confirmationSlipButtonGroup;
     private javax.swing.JButton deleteItemButton;
     private javax.swing.JButton deleteStudentButton;
     private javax.swing.JButton deleteTypeButton;
     private javax.swing.JButton deletedEmpployeeButton;
     private javax.swing.JCheckBox drinkCheckBox;
-    private javax.swing.JTextField emailtextField;
     private javax.swing.JTextField employeeFirstnameTextField;
+    private javax.swing.JTextField employeeemailtextField;
     private javax.swing.JTextField employeelastNameTextField;
-    private javax.swing.JLabel errorMsgLabel;
-    private javax.swing.JTextField firstNameTextField;
-    private javax.swing.JComboBox<String> gradeComboBox;
+    private javax.swing.JTextField employeepasswordTextField;
     private javax.swing.JTextField itemNameTextField;
     private javax.swing.JComboBox<String> itemTypeComboBox;
     private javax.swing.JComboBox<String> itemTypesCombobox;
@@ -1555,7 +1647,6 @@ this.setOrderTabelSelectionModel();
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1569,30 +1660,37 @@ this.setOrderTabelSelectionModel();
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JRadioButton leastSoldRadioButton;
+    private javax.swing.JPanel manageEmployeesPanel;
     private javax.swing.JPanel manageMenuPanel;
     private javax.swing.JPanel manageStudenstPanel;
-    private javax.swing.JPanel manageWorkersPanel;
     private javax.swing.ButtonGroup mealButtongroup;
+    private javax.swing.JPanel menageemployeesPanel;
+    private javax.swing.JLabel menuErrorMsgLabel;
     private javax.swing.JTable menuTable;
     private javax.swing.JRadioButton mostSoldradioButton;
     private javax.swing.ButtonGroup orderBybuttonGroup;
     private javax.swing.JTable orderedItemtable;
     private javax.swing.JTable ordersTable;
-    private javax.swing.JTextField passwordTextField;
     private javax.swing.JCheckBox sandwichtextBox;
     private javax.swing.JCheckBox snackCheckbox;
     private javax.swing.ButtonGroup soldButtonGroup;
     private javax.swing.JTable statsTable;
+    private com.github.lgooddatepicker.components.DatePicker studentDOBdatePicker;
+    private javax.swing.JLabel studentErrorMsgLabel;
+    private javax.swing.JTextField studentFirstNameTextField;
+    private javax.swing.JTextField studentIDtextField;
     private javax.swing.JPanel studentPanel;
+    private javax.swing.JTextField studentSurnameTextField;
+    private javax.swing.JComboBox<String> studentclassComboBox;
+    private javax.swing.JComboBox<String> studentgradeComboBox;
     private javax.swing.JTable studentsTable;
-    private javax.swing.JTextField surnameTextField;
     private javax.swing.JTextField typenameTextField;
     private javax.swing.JTable userTable;
     private javax.swing.ButtonGroup usertypeButtonGroup;
     private javax.swing.JPanel viewOrdersPanel;
     private javax.swing.JButton viewPasswordButton;
     private javax.swing.JButton viewSalesButton;
-    private javax.swing.JPanel viewSalesPanel;
+    private javax.swing.JPanel viewStatsPanel;
     private javax.swing.JRadioButton waiterradioButton;
     private javax.swing.JCheckBox wrapCheckBox;
     // End of variables declaration//GEN-END:variables

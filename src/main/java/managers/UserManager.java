@@ -42,6 +42,16 @@ public class UserManager implements TableModel {
           }
     }
     
+    public int getUserID(String email, String password){ 
+        int out = 0; 
+        for(int i = 0; i < size; i++){ 
+            if(email.equalsIgnoreCase(userArr[i].getEmail()) && password.equalsIgnoreCase(userArr[i].getPassword()))
+                out = userArr[i].getUserID(); 
+        }
+        return out; 
+        
+        
+    }
     
     public void addUser(String firstName, String lastname, String type, String email, String password) throws SQLException{ 
          

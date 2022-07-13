@@ -83,5 +83,30 @@ public class MenuItem {
     }
     
     
+    private static boolean hasLettersOrSpaceOnly(String idNumber){
+        for(char c: idNumber.toCharArray()){
+            if(!Character.isAlphabetic(c) && !Character.isSpaceChar(c))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+     private static boolean hasNumbersOnly(String price){
+        for(char c: price.toCharArray()){
+            if(!Character.isDigit(c))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    
+    public static boolean isValidMenuitemName(String name){ 
+        return hasLettersOrSpaceOnly(name); 
+    }
+
     
 }

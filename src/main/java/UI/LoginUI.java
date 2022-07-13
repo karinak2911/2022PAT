@@ -23,6 +23,8 @@ public class LoginUI extends javax.swing.JFrame {
      * Creates new form LoginUI
      */ 
     
+    
+    
     SystemManager systemManager;
       
     public int waiterID = 0; 
@@ -89,6 +91,17 @@ public class LoginUI extends javax.swing.JFrame {
             }
         });
 
+        seePasswordButton.setIcon(new javax.swing.JLabel() {
+            public javax.swing.Icon getIcon() {
+                try {
+                    return new javax.swing.ImageIcon(
+                        new java.net.URL("https://iconmonstr.com/eye-9-svg/")
+                    );
+                } catch (java.net.MalformedURLException e) {
+                }
+                return null;
+            }
+        }.getIcon());
         seePasswordButton.setText("jButton1");
         seePasswordButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -193,11 +206,14 @@ public class LoginUI extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
+        
         String email = emailtextField.getText(); 
         String password = passwordTextField.getText(); 
         if(workerTypeComboBox.getSelectedItem().equals("waiter") && systemManager.um.isUserValid(email, password, "waiter")){ 
             try {
-                new WaiterUI().setVisible(true);
+                int userID = systemManager.um.getUserID(email, password); 
+                new WaiterUI(userID).setVisible(true);
+                
             } catch (SQLException ex) {
                 Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
             }

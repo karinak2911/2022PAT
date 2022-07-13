@@ -93,7 +93,7 @@ public class OrdersManager implements TableModel{
             
     }
     
-    public int getLatestOrderID(){ 
+    public int getNextOrderID(){ 
         return size; 
     }
     
