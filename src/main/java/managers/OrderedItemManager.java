@@ -49,11 +49,13 @@ public class OrderedItemManager implements TableModel{
      public void addToDatabase(int orderID) throws SQLException{ 
          String query = "INSERT INTO `ordereditemtbl` (`orderID`, `menuItemID`, `quantity`) VALUES ("; 
          for(int i = 0; i < size; i++){ 
-             query+= orderID + "," + orderedItemArr[i].getMenuItemID() + "," + orderedItemArr[i].getQuantity() + "\n"; 
+             query+= orderID + "," + orderedItemArr[i].getMenuItemID() + "," + orderedItemArr[i].getQuantity() + "),\n"; 
          }
-         query += ");"; 
-         SystemManager.db.update(query);
-         System.out.println(query);
+         String out = query.substring(0, query.length() - 1); 
+         out += ";";   
+         System.out.println(out);
+         SystemManager.db.update(out);
+
      }
     
     public double getTotalPriceOfOrder() {
@@ -63,6 +65,8 @@ public class OrderedItemManager implements TableModel{
         }
         return total;
     }
+    
+    
 
     @Override
     public int getRowCount() {

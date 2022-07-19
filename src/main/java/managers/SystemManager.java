@@ -25,6 +25,7 @@ public class SystemManager {
     public static TypeManager tm;
     public static OrderManager orm;
     public static OrderedItemManager oim;
+    public static HelpMsgManager hsm; 
 
     public SystemManager() {
         try {
@@ -41,7 +42,8 @@ public class SystemManager {
             System.out.println("SM: order items  initialised");
             tm = new TypeManager();
             System.out.println("SM: type items  initialised");
-
+            hsm = new HelpMsgManager(); 
+ System.out.println("SM: help  initialised");
         } catch (ClassNotFoundException ex) {
             System.out.println("SM: Database driver could not be loaded");
             Logger.getLogger(SystemManager.class.getName()).log(Level.SEVERE, null, ex);

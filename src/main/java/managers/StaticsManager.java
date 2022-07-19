@@ -32,7 +32,7 @@ public class StaticsManager implements TableModel{
         System.out.println(query);
         ResultSet rs = SystemManager.db.query(query); 
          while(rs.next()){ 
-             String menuItemName = rs.getString(1); 
+            String menuItemName = rs.getString(1); 
              String typeName = rs.getString(2); 
              double price = rs.getDouble(3); 
              int timesSold = rs.getInt(4); 

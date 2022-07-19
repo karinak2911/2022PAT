@@ -1,5 +1,9 @@
 package UI;
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -212,8 +216,16 @@ public class LoginUI extends javax.swing.JFrame {
         if(workerTypeComboBox.getSelectedItem().equals("waiter") && systemManager.um.isUserValid(email, password, "waiter")){ 
             try {
                 int userID = systemManager.um.getUserID(email, password); 
+              
                 new WaiterUI(userID).setVisible(true);
+                this.dispose();
+                Object ex = null;
+               
                 
+           
+                Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -243,7 +255,11 @@ public class LoginUI extends javax.swing.JFrame {
         passwordTextField.setEchoChar('*'); 
     }//GEN-LAST:event_seePasswordButtonMouseReleased
 
-    
+    public void PrintUserIDtoFile(int input) throws IOException{ 
+        FileWriter fw = new FileWriter("Current Waiter.txt");
+            PrintWriter pw = new PrintWriter(fw);
+            pw.print(input);
+    }
     /**
      * @param args the command line arguments
      */

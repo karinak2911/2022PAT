@@ -93,8 +93,14 @@ public class OrdersManager implements TableModel{
             
     }
     
-    public int getNextOrderID(){ 
-        return size; 
+    public int getNextOrderID() throws SQLException{ 
+       String query = "SELECT MAX(`OrderID`) FROM orderstbl"; 
+         ResultSet rs = SystemManager.db.query(query); 
+         int out = 0; 
+         while(rs.next()){ 
+             out = rs.getInt(1); 
+         }
+         return out + 1; 
     }
     
 

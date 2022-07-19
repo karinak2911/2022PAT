@@ -177,6 +177,7 @@ this.setOrderTabelSelectionModel();
         drinkCheckBox = new javax.swing.JCheckBox();
         wrapCheckBox = new javax.swing.JCheckBox();
         viewSalesButton = new javax.swing.JButton();
+        viewFilteredStats = new javax.swing.JButton();
         manageMenuPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -219,7 +220,6 @@ this.setOrderTabelSelectionModel();
         waiterradioButton = new javax.swing.JRadioButton();
         adminRadioButton = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
-        FAQsPanel = new javax.swing.JPanel();
         manageStudenstPanel = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         studentPanel = new javax.swing.JPanel();
@@ -244,6 +244,15 @@ this.setOrderTabelSelectionModel();
         studentErrorMsgLabel = new javax.swing.JLabel();
         deleteStudentButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        FAQsPanel = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        helpMessagetextArea = new javax.swing.JTextArea();
+        manageMenuFAQsButton = new javax.swing.JButton();
+        manageEmployeesFAQsButton = new javax.swing.JButton();
+        manageStudentsFAQsButton = new javax.swing.JButton();
+        viewStatsFAQsButton = new javax.swing.JButton();
+        viewOrdersFAQsButton = new javax.swing.JButton();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -320,7 +329,7 @@ this.setOrderTabelSelectionModel();
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(215, 215, 215)
                         .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addContainerGap(298, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,6 +411,13 @@ this.setOrderTabelSelectionModel();
 
         viewSalesButton.setText("VIEW SALES ");
 
+        viewFilteredStats.setText("VIEW");
+        viewFilteredStats.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewFilteredStatsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout viewStatsPanelLayout = new javax.swing.GroupLayout(viewStatsPanel);
         viewStatsPanel.setLayout(viewStatsPanelLayout);
         viewStatsPanelLayout.setHorizontalGroup(
@@ -427,11 +443,6 @@ this.setOrderTabelSelectionModel();
                         .addGap(135, 135, 135)
                         .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(viewStatsPanelLayout.createSequentialGroup()
-                                .addComponent(allCheckbox)
-                                .addGap(29, 29, 29)
-                                .addComponent(snackCheckbox))
-                            .addComponent(SaladCheckBox)
-                            .addGroup(viewStatsPanelLayout.createSequentialGroup()
                                 .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(sandwichtextBox)
                                     .addComponent(jCheckBox2))
@@ -439,10 +450,22 @@ this.setOrderTabelSelectionModel();
                                 .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(viewStatsPanelLayout.createSequentialGroup()
                                         .addComponent(wrapCheckBox)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 276, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 367, Short.MAX_VALUE)
                                         .addComponent(viewSalesButton))
-                                    .addComponent(drinkCheckBox))))))
+                                    .addComponent(drinkCheckBox)))
+                            .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                                .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                                        .addComponent(allCheckbox)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(snackCheckbox))
+                                    .addComponent(SaladCheckBox))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(38, 38, 38))
+            .addGroup(viewStatsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(viewFilteredStats)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         viewStatsPanelLayout.setVerticalGroup(
             viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -473,7 +496,9 @@ this.setOrderTabelSelectionModel();
                             .addComponent(wrapCheckBox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SaladCheckBox)
-                        .addContainerGap(855, Short.MAX_VALUE))
+                        .addGap(31, 31, 31)
+                        .addComponent(viewFilteredStats)
+                        .addContainerGap(801, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewStatsPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(viewSalesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -926,19 +951,6 @@ this.setOrderTabelSelectionModel();
 
         adminTabbedPan.addTab("Manage employees", manageEmployeesPanel);
 
-        javax.swing.GroupLayout FAQsPanelLayout = new javax.swing.GroupLayout(FAQsPanel);
-        FAQsPanel.setLayout(FAQsPanelLayout);
-        FAQsPanelLayout.setHorizontalGroup(
-            FAQsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 747, Short.MAX_VALUE)
-        );
-        FAQsPanelLayout.setVerticalGroup(
-            FAQsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1178, Short.MAX_VALUE)
-        );
-
-        adminTabbedPan.addTab("FAQS", FAQsPanel);
-
         manageStudenstPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 manageStudenstPanelMouseClicked(evt);
@@ -949,7 +961,7 @@ this.setOrderTabelSelectionModel();
         studentPanel.setLayout(studentPanelLayout);
         studentPanelLayout.setHorizontalGroup(
             studentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 518, Short.MAX_VALUE)
+            .addGap(0, 714, Short.MAX_VALUE)
         );
         studentPanelLayout.setVerticalGroup(
             studentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1134,7 +1146,7 @@ this.setOrderTabelSelectionModel();
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 818, Short.MAX_VALUE))
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1196,6 +1208,103 @@ this.setOrderTabelSelectionModel();
         );
 
         adminTabbedPan.addTab("Manage Students", manageStudenstPanel);
+
+        helpMessagetextArea.setEditable(false);
+        helpMessagetextArea.setColumns(20);
+        helpMessagetextArea.setLineWrap(true);
+        helpMessagetextArea.setRows(5);
+        jScrollPane5.setViewportView(helpMessagetextArea);
+
+        manageMenuFAQsButton.setText("Manage menu");
+        manageMenuFAQsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageMenuFAQsButtonActionPerformed(evt);
+            }
+        });
+
+        manageEmployeesFAQsButton.setText("Manage employees");
+        manageEmployeesFAQsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageEmployeesFAQsButtonActionPerformed(evt);
+            }
+        });
+
+        manageStudentsFAQsButton.setText("Manage students");
+        manageStudentsFAQsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageStudentsFAQsButtonActionPerformed(evt);
+            }
+        });
+
+        viewStatsFAQsButton.setText("View stats");
+        viewStatsFAQsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewStatsFAQsButtonActionPerformed(evt);
+            }
+        });
+
+        viewOrdersFAQsButton.setText("View orders");
+        viewOrdersFAQsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewOrdersFAQsButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(viewStatsFAQsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(manageEmployeesFAQsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(manageMenuFAQsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(manageStudentsFAQsButton, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(viewOrdersFAQsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(319, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(viewOrdersFAQsButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(viewStatsFAQsButton)
+                        .addGap(9, 9, 9)
+                        .addComponent(manageMenuFAQsButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(manageEmployeesFAQsButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(manageStudentsFAQsButton))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(133, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout FAQsPanelLayout = new javax.swing.GroupLayout(FAQsPanel);
+        FAQsPanel.setLayout(FAQsPanelLayout);
+        FAQsPanelLayout.setHorizontalGroup(
+            FAQsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FAQsPanelLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        FAQsPanelLayout.setVerticalGroup(
+            FAQsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FAQsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(826, Short.MAX_VALUE))
+        );
+
+        adminTabbedPan.addTab("FAQS", FAQsPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1526,6 +1635,38 @@ JOptionPane.showMessageDialog(null, "Menu Item successfully deleted");
         
     }//GEN-LAST:event_leastSoldRadioButtonActionPerformed
 
+    private void viewOrdersFAQsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrdersFAQsButtonActionPerformed
+        // TODO add your handling code here:
+        helpMessagetextArea.setText(systemManager.hsm.getMessage(1));
+    }//GEN-LAST:event_viewOrdersFAQsButtonActionPerformed
+
+    private void viewStatsFAQsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewStatsFAQsButtonActionPerformed
+        // TODO add your handling code here:
+         helpMessagetextArea.setText(systemManager.hsm.getMessage(2));
+    }//GEN-LAST:event_viewStatsFAQsButtonActionPerformed
+
+    private void manageMenuFAQsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageMenuFAQsButtonActionPerformed
+        // TODO add your handling code here:
+         helpMessagetextArea.setText(systemManager.hsm.getMessage(3));
+    }//GEN-LAST:event_manageMenuFAQsButtonActionPerformed
+
+    private void manageEmployeesFAQsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageEmployeesFAQsButtonActionPerformed
+ helpMessagetextArea.setText(systemManager.hsm.getMessage(4));        // TODO add your handling code here:
+    }//GEN-LAST:event_manageEmployeesFAQsButtonActionPerformed
+
+    private void manageStudentsFAQsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageStudentsFAQsButtonActionPerformed
+ helpMessagetextArea.setText(systemManager.hsm.getMessage(5));        // TODO add your handling code here:
+    }//GEN-LAST:event_manageStudentsFAQsButtonActionPerformed
+
+    private void viewFilteredStatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewFilteredStatsActionPerformed
+        try {
+            // TODO add your handling code here:
+            this.populateStatsTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_viewFilteredStatsActionPerformed
+
     private void setOrderTabelSelectionModel() {
         ordersTable.setRowSelectionAllowed(true);
         ListSelectionModel cellSelectionModel = ordersTable.getSelectionModel();
@@ -1609,6 +1750,7 @@ JOptionPane.showMessageDialog(null, "Menu Item successfully deleted");
     private javax.swing.JTextField employeeemailtextField;
     private javax.swing.JTextField employeelastNameTextField;
     private javax.swing.JTextField employeepasswordTextField;
+    private javax.swing.JTextArea helpMessagetextArea;
     private javax.swing.JTextField itemNameTextField;
     private javax.swing.JComboBox<String> itemTypeComboBox;
     private javax.swing.JComboBox<String> itemTypesCombobox;
@@ -1647,6 +1789,7 @@ JOptionPane.showMessageDialog(null, "Menu Item successfully deleted");
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1656,13 +1799,17 @@ JOptionPane.showMessageDialog(null, "Menu Item successfully deleted");
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JRadioButton leastSoldRadioButton;
+    private javax.swing.JButton manageEmployeesFAQsButton;
     private javax.swing.JPanel manageEmployeesPanel;
+    private javax.swing.JButton manageMenuFAQsButton;
     private javax.swing.JPanel manageMenuPanel;
     private javax.swing.JPanel manageStudenstPanel;
+    private javax.swing.JButton manageStudentsFAQsButton;
     private javax.swing.ButtonGroup mealButtongroup;
     private javax.swing.JPanel menageemployeesPanel;
     private javax.swing.JLabel menuErrorMsgLabel;
@@ -1687,9 +1834,12 @@ JOptionPane.showMessageDialog(null, "Menu Item successfully deleted");
     private javax.swing.JTextField typenameTextField;
     private javax.swing.JTable userTable;
     private javax.swing.ButtonGroup usertypeButtonGroup;
+    private javax.swing.JButton viewFilteredStats;
+    private javax.swing.JButton viewOrdersFAQsButton;
     private javax.swing.JPanel viewOrdersPanel;
     private javax.swing.JButton viewPasswordButton;
     private javax.swing.JButton viewSalesButton;
+    private javax.swing.JButton viewStatsFAQsButton;
     private javax.swing.JPanel viewStatsPanel;
     private javax.swing.JRadioButton waiterradioButton;
     private javax.swing.JCheckBox wrapCheckBox;
