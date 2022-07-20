@@ -18,8 +18,10 @@ import objects.MenuItem;
  */
 public class StaticsManager implements TableModel{
     
-    MenuItem[] menuArr = new MenuItem[200]; 
-    int size = 0;
+    private MenuItem[] menuArr = new MenuItem[200]; 
+    private int size = 0;
+    private MenuItem[] currentMenuItemArr = new MenuItem[200];
+    private int currentSize = 0; 
     
     
     public StaticsManager() throws SQLException{ 
@@ -45,14 +47,18 @@ public class StaticsManager implements TableModel{
     
     
     public void orderArray(boolean asc){ 
+        
+       this.populateWholeArray();
+        
+        
         if(asc){ 
             for (int currentIndex = size - 1; currentIndex >= 0; currentIndex--) {
             boolean sorted = true;
             for (int i = 0; i < currentIndex; i++) {
-                if (menuArr[i].getTimesSold() > (menuArr[i + 1]).getTimesSold()) {
-                    MenuItem temp = menuArr[i];
-                    menuArr[i] = menuArr[i + 1];
-                    menuArr[i + 1] = temp;
+                if (currentMenuItemArr[i].getTimesSold() > (currentMenuItemArr[i + 1]).getTimesSold()) {
+                    MenuItem temp = currentMenuItemArr[i];
+                    currentMenuItemArr[i] = currentMenuItemArr[i + 1];
+                    currentMenuItemArr[i + 1] = temp;
                     sorted = false;
                 }
 
@@ -67,10 +73,10 @@ public class StaticsManager implements TableModel{
              for (int currentIndex = size - 1; currentIndex >= 0; currentIndex--) {
             boolean sorted = true;
             for (int i = 0; i < currentIndex; i++) {
-                if (menuArr[i].getTimesSold() < (menuArr[i + 1]).getTimesSold()) {
-                    MenuItem temp = menuArr[i];
-                    menuArr[i] = menuArr[i + 1];
-                    menuArr[i + 1] = temp;
+                if (currentMenuItemArr[i].getTimesSold() < (currentMenuItemArr[i + 1]).getTimesSold()) {
+                    MenuItem temp = currentMenuItemArr[i];
+                    currentMenuItemArr[i] = currentMenuItemArr[i + 1];
+                    currentMenuItemArr[i + 1] = temp;
                     sorted = false;
                 }
 
@@ -82,10 +88,36 @@ public class StaticsManager implements TableModel{
         }
         }
     } 
+    
+    
+    private void populateWholeArray(){ 
+         for(int j = 0; j < size; j++){ 
+            currentMenuItemArr[currentSize] = menuArr[j]; 
+            currentSize++; 
+        }
+    }
+    
+    public void filter(String [] sArr, int sArrSize){ 
+        if(sArr[0].equalsIgnoreCase("All")){ 
+            this.populateWholeArray();
+        }
+        
+        else { 
+        for(int i = 0; i < size; i++){ 
+            for(int j = 0; j < sArrSize; j++){ 
+                if(sArr[j].equalsIgnoreCase(menuArr[i].getItemType())){ 
+                    currentMenuItemArr[currentSize] = menuArr[i]; 
+                    currentSize++; 
+                }
+            }
+        }
+        } 
+        
+    }
 
     @Override
     public int getRowCount() {
-       return size; 
+       return currentSize; 
     }
 
     @Override
@@ -132,10 +164,10 @@ public class StaticsManager implements TableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
          Object out = new Object();
         switch(columnIndex){
-            case 0 -> out = menuArr[rowIndex].getItemName();
-            case 1 -> out = menuArr[rowIndex].getItemType();
-            case 2 -> out = menuArr[rowIndex].getPrice();
-            case 3 -> out = menuArr[rowIndex].getTimesSold();
+            case 0 -> out = currentMenuItemArr[rowIndex].getItemName();
+            case 1 -> out = currentMenuItemArr[rowIndex].getItemType();
+            case 2 -> out = currentMenuItemArr[rowIndex].getPrice();
+            case 3 -> out = currentMenuItemArr[rowIndex].getTimesSold();
             
         }
         
