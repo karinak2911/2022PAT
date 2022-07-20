@@ -38,8 +38,8 @@ public class SystemManager {
             oim = new OrderedItemManager();
             om = new OrdersManager();
             System.out.println("SM: orders initialised");
-            stm = new StaticsManager("DESC");
-            System.out.println("SM: order items  initialised");
+          stm = new StaticsManager();
+        System.out.println("SM: order items  initialised");
             tm = new TypeManager();
             System.out.println("SM: type items  initialised");
             hsm = new HelpMsgManager(); 
@@ -83,10 +83,6 @@ public class SystemManager {
         sm = new StudentManager(grade);
     }
 
-    public void initialiseStatsManager(String orderBy) throws SQLException {
-        stm = new StaticsManager(orderBy);
-        System.out.println("SM: order items  initialised");
-
-    }
+    
 
 }

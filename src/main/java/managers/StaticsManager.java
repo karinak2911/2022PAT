@@ -22,13 +22,13 @@ public class StaticsManager implements TableModel{
     int size = 0;
     
     
-    public StaticsManager(String orderBy) throws SQLException{ 
+    public StaticsManager() throws SQLException{ 
         
         String query = "SELECT menuitemtbl.`itemName`, typetbl.`typeName`, menuitemtbl.`itemPrice`, SUM(ordereditemtbl.quantity) AS times_sold\n" +
 " FROM ordereditemtbl, typetbl, menuitemtbl\n" +
 "WHERE typetbl.`typeId` = menuitemtbl.`typeID` AND ordereditemtbl.`menuItemID` = menuitemtbl.`itemID`\n" +
 "GROUP BY menuitemtbl.`itemID`"
-                + "ORDER BY times_sold " + orderBy + ";"; 
+                + ";"; 
         System.out.println(query);
         ResultSet rs = SystemManager.db.query(query); 
          while(rs.next()){ 
@@ -42,6 +42,46 @@ public class StaticsManager implements TableModel{
          }
         
     }
+    
+    
+    public void orderArray(boolean asc){ 
+        if(asc){ 
+            for (int currentIndex = size - 1; currentIndex >= 0; currentIndex--) {
+            boolean sorted = true;
+            for (int i = 0; i < currentIndex; i++) {
+                if (menuArr[i].getTimesSold() > (menuArr[i + 1]).getTimesSold()) {
+                    MenuItem temp = menuArr[i];
+                    menuArr[i] = menuArr[i + 1];
+                    menuArr[i + 1] = temp;
+                    sorted = false;
+                }
+
+            }
+            // outside inner for loop!!!
+            if (sorted) {
+                break;
+            }
+        }
+    }
+        else { 
+             for (int currentIndex = size - 1; currentIndex >= 0; currentIndex--) {
+            boolean sorted = true;
+            for (int i = 0; i < currentIndex; i++) {
+                if (menuArr[i].getTimesSold() < (menuArr[i + 1]).getTimesSold()) {
+                    MenuItem temp = menuArr[i];
+                    menuArr[i] = menuArr[i + 1];
+                    menuArr[i + 1] = temp;
+                    sorted = false;
+                }
+
+            }
+            // outside inner for loop!!!
+            if (sorted) {
+                break;
+            }
+        }
+        }
+    } 
 
     @Override
     public int getRowCount() {

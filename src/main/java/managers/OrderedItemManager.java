@@ -47,11 +47,11 @@ public class OrderedItemManager implements TableModel{
     
      
      public void addToDatabase(int orderID) throws SQLException{ 
-         String query = "INSERT INTO `ordereditemtbl` (`orderID`, `menuItemID`, `quantity`) VALUES ("; 
+         String query = "INSERT INTO ordereditemtbl (orderID, menuItemID, quantity) VALUES "; 
          for(int i = 0; i < size; i++){ 
-             query+= orderID + "," + orderedItemArr[i].getMenuItemID() + "," + orderedItemArr[i].getQuantity() + "),\n"; 
+             query+= "(" + orderID + "," + orderedItemArr[i].getMenuItemID() + "," + orderedItemArr[i].getQuantity() + "),\n"; 
          }
-         String out = query.substring(0, query.length() - 1); 
+         String out = query.substring(0, query.length() - 2); 
          out += ";";   
          System.out.println(out);
          SystemManager.db.update(out);

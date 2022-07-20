@@ -216,6 +216,7 @@ public class WaiterUI extends javax.swing.JFrame {
 
         jLabel9.setText("Orderred Items");
 
+        ordersButtonGroup.add(myOrdersButton);
         myOrdersButton.setSelected(true);
         myOrdersButton.setText("MY ORDEERS ONLY");
         myOrdersButton.addActionListener(new java.awt.event.ActionListener() {
@@ -224,6 +225,7 @@ public class WaiterUI extends javax.swing.JFrame {
             }
         });
 
+        ordersButtonGroup.add(allOrdersRadioButton);
         allOrdersRadioButton.setText("ALL ORDERS ");
         allOrdersRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -292,9 +294,8 @@ public class WaiterUI extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(faqsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                    .addGroup(faqsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addContainerGap(683, Short.MAX_VALUE))

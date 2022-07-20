@@ -232,6 +232,9 @@
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="myOrdersButton">
                   <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="ordersButtonGroup"/>
+                    </Property>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="MY ORDEERS ONLY"/>
                   </Properties>
@@ -241,6 +244,9 @@
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="allOrdersRadioButton">
                   <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="ordersButtonGroup"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="ALL ORDERS "/>
                   </Properties>
                   <Events>
@@ -265,10 +271,8 @@
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jButton3" pref="138" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jButton2" pref="138" max="32767" attributes="0"/>
-                                  <Component id="jButton1" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="jButton2" pref="138" max="32767" attributes="0"/>
+                              <Component id="jButton1" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
