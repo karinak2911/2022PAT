@@ -39,6 +39,7 @@ public class AdminUI extends javax.swing.JFrame {
     public AdminUI() throws ClassNotFoundException, SQLException {
         initComponents();
         systemManager = new SystemManager();
+        
 
         studentDOBdatePicker.setDateToToday();
 
@@ -259,7 +260,7 @@ systemManager.stm.orderArray(false);
         jLabel14 = new javax.swing.JLabel();
         allCheckbox = new javax.swing.JCheckBox();
         sandwichtextBox = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        burgerCheckbox = new javax.swing.JCheckBox();
         SaladCheckBox = new javax.swing.JCheckBox();
         snackCheckbox = new javax.swing.JCheckBox();
         drinkCheckBox = new javax.swing.JCheckBox();
@@ -336,11 +337,12 @@ systemManager.stm.orderArray(false);
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(215, 215, 215)
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(298, Short.MAX_VALUE))
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(102, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(188, 188, 188))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,11 +351,11 @@ systemManager.stm.orderArray(false);
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(65, 65, 65)
                 .addComponent(jLabel24)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout viewOrdersPanelLayout = new javax.swing.GroupLayout(viewOrdersPanel);
@@ -1209,8 +1211,13 @@ systemManager.stm.orderArray(false);
         allCheckbox.setText("All ");
 
         sandwichtextBox.setText("Sandwich");
+        sandwichtextBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sandwichtextBoxActionPerformed(evt);
+            }
+        });
 
-        jCheckBox2.setText("Burger");
+        burgerCheckbox.setText("Burger");
 
         SaladCheckBox.setText("Salad");
 
@@ -1245,7 +1252,7 @@ systemManager.stm.orderArray(false);
                         .addComponent(jLabel13)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(burgerCheckbox, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(allCheckbox, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGroup(viewStatsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(viewStatsPanelLayout.createSequentialGroup()
@@ -1296,7 +1303,7 @@ systemManager.stm.orderArray(false);
                                 .addGap(26, 26, 26)
                                 .addComponent(allCheckbox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox2)))))
+                                .addComponent(burgerCheckbox)))))
                 .addGap(18, 18, 18)
                 .addComponent(SaladCheckBox)
                 .addContainerGap(364, Short.MAX_VALUE))
@@ -1664,6 +1671,11 @@ JOptionPane.showMessageDialog(null, "Menu Item successfully deleted");
           this.orderStatsTable(false);
     }//GEN-LAST:event_mostSoldradioButtonActionPerformed
 
+    private void sandwichtextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sandwichtextBoxActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_sandwichtextBoxActionPerformed
+
     private void setOrderTabelSelectionModel() {
         ordersTable.setRowSelectionAllowed(true);
         ListSelectionModel cellSelectionModel = ordersTable.getSelectionModel();
@@ -1737,6 +1749,7 @@ JOptionPane.showMessageDialog(null, "Menu Item successfully deleted");
     private javax.swing.JRadioButton adminRadioButton;
     private javax.swing.JTabbedPane adminTabbedPan;
     private javax.swing.JCheckBox allCheckbox;
+    private javax.swing.JCheckBox burgerCheckbox;
     private javax.swing.ButtonGroup confirmationSlipButtonGroup;
     private javax.swing.JButton deleteItemButton;
     private javax.swing.JButton deleteStudentButton;
@@ -1752,7 +1765,6 @@ JOptionPane.showMessageDialog(null, "Menu Item successfully deleted");
     private javax.swing.JComboBox<String> itemTypeComboBox;
     private javax.swing.JComboBox<String> itemTypesCombobox;
     private javax.swing.JTextField itempricetextField;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
