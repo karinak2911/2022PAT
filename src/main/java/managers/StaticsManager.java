@@ -74,27 +74,26 @@ public class StaticsManager implements TableModel{
     } 
     
     
-    public void filter(String [] sArr, int sArrSize){ 
+    public void filter(ArrayList<String> sArr){ 
         currentMenuItemArr.clear();
-        if(sArr[0].equalsIgnoreCase("All")){ 
-            currentMenuItemArr.addAll(menuArr);
-        }
+      
+       
         
-        else { 
+        
         for(MenuItem item: menuArr){ 
-            for(int j = 0; j < sArrSize; j++){ 
-                if(sArr[j].equalsIgnoreCase(item.getItemType())){ 
+            for(int j = 0; j < sArr.size(); j++){ 
+                if(sArr.get(j).equalsIgnoreCase(item.getItemType())){ 
                     currentMenuItemArr.add(item);
                 }
             }
         }
-        } 
+ 
         
     }
 
     @Override
     public int getRowCount() {
-       return menuArr.size(); 
+       return currentMenuItemArr.size(); 
     }
 
     @Override

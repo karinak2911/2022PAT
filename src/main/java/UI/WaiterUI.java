@@ -199,7 +199,8 @@ public class WaiterUI extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(ordersTable);
 
-        jLabel7.setText("ORDERS: ");
+        jLabel7.setFont(new java.awt.Font("Yu Gothic", 1, 18)); // NOI18N
+        jLabel7.setText("ORDERS");
 
         currentOrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -214,11 +215,12 @@ public class WaiterUI extends javax.swing.JFrame {
         ));
         jScrollPane7.setViewportView(currentOrderTable);
 
-        jLabel9.setText("Orderred Items");
+        jLabel9.setFont(new java.awt.Font("Yu Gothic", 1, 18)); // NOI18N
+        jLabel9.setText("ORDERRED ITEMS");
 
         ordersButtonGroup.add(myOrdersButton);
         myOrdersButton.setSelected(true);
-        myOrdersButton.setText("MY ORDEERS ONLY");
+        myOrdersButton.setText("MY ORDERS ONLY");
         myOrdersButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 myOrdersButtonActionPerformed(evt);
@@ -250,24 +252,24 @@ public class WaiterUI extends javax.swing.JFrame {
                         .addGap(91, 91, 91)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(viewOrdersPanelLayout.createSequentialGroup()
-                        .addGap(259, 259, 259)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(256, 256, 256)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(viewOrdersPanelLayout.createSequentialGroup()
-                        .addGap(274, 274, 274)
+                        .addGap(224, 224, 224)
                         .addComponent(jLabel9)))
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
         viewOrdersPanelLayout.setVerticalGroup(
             viewOrdersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(viewOrdersPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(viewOrdersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(viewOrdersPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(viewOrdersPanelLayout.createSequentialGroup()
-                        .addGap(65, 65, 65)
+                        .addGap(115, 115, 115)
                         .addComponent(myOrdersButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(allOrdersRadioButton)))
@@ -275,7 +277,7 @@ public class WaiterUI extends javax.swing.JFrame {
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
 
         FAQsPane.addTab("View orders", viewOrdersPanel);
@@ -399,6 +401,7 @@ public class WaiterUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Yu Gothic Medium", 0, 14)); // NOI18N
         jLabel3.setText("Payment Method: ");
 
         paymentMethodButtonGroup.add(cardradiobutton);
@@ -453,6 +456,7 @@ public class WaiterUI extends javax.swing.JFrame {
         ));
         jScrollPane5.setViewportView(studentTable);
 
+        jLabel11.setFont(new java.awt.Font("Yu Gothic", 0, 14)); // NOI18N
         jLabel11.setText("Is order collected: ");
 
         collectedButtonGroup.add(notCollectedRadioButton);
@@ -480,20 +484,14 @@ public class WaiterUI extends javax.swing.JFrame {
                     .addGroup(placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(placeOrderPanelLayout.createSequentialGroup()
                             .addGroup(placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(placeOrderPanelLayout.createSequentialGroup()
                                     .addGap(93, 93, 93)
                                     .addComponent(jLabel5)
                                     .addGap(18, 18, 18)
-                                    .addComponent(studentGradeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(19, 19, 19)
-                            .addGroup(placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(placeOrderPanelLayout.createSequentialGroup()
-                                    .addGap(84, 84, 84)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(placeOrderPanelLayout.createSequentialGroup()
-                                    .addGap(161, 161, 161)
-                                    .addComponent(addOrderRadioButton))))
+                                    .addComponent(studentGradeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(103, 103, 103)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(addToOrderbutton)
                         .addGroup(placeOrderPanelLayout.createSequentialGroup()
                             .addGroup(placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -506,28 +504,28 @@ public class WaiterUI extends javax.swing.JFrame {
                     .addGroup(placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(placeOrderPanelLayout.createSequentialGroup()
                             .addComponent(jLabel11)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(notCollectedRadioButton)
                             .addGap(18, 18, 18)
-                            .addGroup(placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, placeOrderPanelLayout.createSequentialGroup()
-                                    .addGap(320, 320, 320)
-                                    .addComponent(jLabel10)
-                                    .addGap(146, 146, 146))
-                                .addGroup(placeOrderPanelLayout.createSequentialGroup()
-                                    .addComponent(collectedRadioButton)
-                                    .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(collectedRadioButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10)
+                            .addGap(146, 146, 146))
                         .addGroup(placeOrderPanelLayout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(18, 18, 18)
-                            .addComponent(cardradiobutton)
-                            .addGap(36, 36, 36)
-                            .addComponent(cashRadioButton)
-                            .addGap(34, 34, 34)
-                            .addComponent(zapperRadioButton)
-                            .addGap(288, 288, 288)
-                            .addComponent(removeFromOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                            .addGroup(placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(addOrderRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(placeOrderPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(cardradiobutton)
+                                    .addGap(36, 36, 36)
+                                    .addComponent(cashRadioButton)
+                                    .addGap(34, 34, 34)
+                                    .addComponent(zapperRadioButton)
+                                    .addGap(288, 288, 288)
+                                    .addComponent(removeFromOrderButton)))
+                            .addGap(0, 17, Short.MAX_VALUE))))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         placeOrderPanelLayout.setVerticalGroup(
             placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -554,33 +552,27 @@ public class WaiterUI extends javax.swing.JFrame {
                     .addGroup(placeOrderPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(removeFromOrderButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(7, 7, 7)))
-                .addGroup(placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(placeOrderPanelLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(collectedRadioButton)
-                        .addGap(0, 0, 0)
-                        .addGroup(placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)))
-                    .addGroup(placeOrderPanelLayout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(notCollectedRadioButton)))
+                        .addComponent(removeFromOrderButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(52, 52, 52)
+                .addGroup(placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(notCollectedRadioButton)
+                    .addComponent(collectedRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(placeOrderPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(addOrderRadioButton)
-                        .addGap(238, 238, 238))
                     .addGroup(placeOrderPanelLayout.createSequentialGroup()
                         .addGroup(placeOrderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(studentGradeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(206, 206, 206))))
+                        .addGap(206, 206, 206))
+                    .addGroup(placeOrderPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67)
+                        .addComponent(addOrderRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(176, 176, 176))))
         );
 
         quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
