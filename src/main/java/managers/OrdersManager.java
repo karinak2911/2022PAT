@@ -86,9 +86,9 @@ public class OrdersManager implements TableModel{
 
   
     public void addOrder(int studentID, String paymentMethod, int userID, int collected) throws SQLException{ 
-        String query = "INSERT INTO cutos.orderstbl (`StudentID`, `PaymentMethod`, `UserID`, `Collected`) \n" +
+        String query = "INSERT INTO orderstbl (`StudentID`, `PaymentMethod`, `UserID`, `Collected`) \n" +
 "	VALUES (" + studentID + ", '" + paymentMethod + "', " + userID + ", " + collected + ");"; 
-            System.out.println(query);
+         
              SystemManager.db.update(query);
             
     }
@@ -151,16 +151,13 @@ public class OrdersManager implements TableModel{
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-//            if(columnIndex == 5)
-//                return true; 
-//            else 
-//                return false; 
+
        return true; 
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        System.out.println(rowIndex);
+      
         Object out = new Object(); 
          switch(columnIndex){
               case 0 -> out = ordersArr[rowIndex].getOrderID();
@@ -197,9 +194,7 @@ public class OrdersManager implements TableModel{
     }
     
     
-    public String print(){ 
-        return ordersArr[1].getStudentFullname(); 
-    }
+   
     
     
     public String[] getOrderedItemsForOrder(int rowIndex) throws SQLException{ 

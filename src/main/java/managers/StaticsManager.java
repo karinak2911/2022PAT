@@ -30,7 +30,7 @@ public class StaticsManager implements TableModel{
 "WHERE typetbl.`typeId` = menuitemtbl.`typeID` AND ordereditemtbl.`menuItemID` = menuitemtbl.`itemID`\n" +
 "GROUP BY menuitemtbl.`itemID`"
                 + ";"; 
-        System.out.println(query);
+    
         ResultSet rs = SystemManager.db.query(query); 
          while(rs.next()){ 
             String menuItemName = rs.getString(1); 

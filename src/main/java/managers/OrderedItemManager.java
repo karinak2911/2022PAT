@@ -53,7 +53,7 @@ public class OrderedItemManager implements TableModel{
          }
          String out = query.substring(0, query.length() - 2); 
          out += ";";   
-         System.out.println(out);
+      
          SystemManager.db.update(out);
 
      }
@@ -161,7 +161,7 @@ public class OrderedItemManager implements TableModel{
               
      
                 break;
-                //redo
+              
             
         }
          

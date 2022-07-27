@@ -55,8 +55,8 @@ public class UserManager implements TableModel {
     
     public void addUser(String firstName, String lastname, String type, String email, String password) throws SQLException{ 
          
-        String query = " INSERT INTO cutos.usertbl ( `firstName`, `surname`, `workerType`, `emailAdress`, `password`) VALUES ( '" + firstName + "' , '"  + lastname + "' , '"  + type + "' , '"  + email + "' , '"  + password + "');";  
-        System.out.println(query);
+        String query = " INSERT INTO usertbl ( `firstName`, `surname`, `workerType`, `emailAdress`, `password`) VALUES ( '" + firstName + "' , '"  + lastname + "' , '"  + type + "' , '"  + email + "' , '"  + password + "');";  
+     
        SystemManager.db.update(query);
         
        userArr[size] = new User(firstName, lastname, type, email, password); 
@@ -64,8 +64,8 @@ public class UserManager implements TableModel {
     }
     
     public void deleteUser(int row) throws SQLException{ 
-         String query = "DELETE FROM cutos.usertbl WHERE `userID` = " + userArr[row].getUserID();
-        SystemManager.db.update(query);
+         String query = "DELETE FROM usertbl WHERE `userID` = " + userArr[row].getUserID();
+  
                 this.shiftLeft(row);
               
     }
@@ -84,20 +84,6 @@ public class UserManager implements TableModel {
     }
     
     
-    
-//    public Object[][] getUsersForTable(){ 
-//        Object[][] out = new Object[size][6];
-//          for (int row = 0; row < size; row++) {
-//
-//            out[row][0] = userArr[row].getUserID(); 
-//            out[row][1] = userArr[row].getType(); 
-//            out[row][2] = userArr[row].getFirstName(); 
-//            out[row][3] = userArr[row].getLastName(); 
-//             out[row][4] = userArr[row].getEmail(); 
-//              out[row][5] = userArr[row].getPassword(); 
-//        }
-//        return out;
-//    }
 
     @Override
     public int getRowCount() {

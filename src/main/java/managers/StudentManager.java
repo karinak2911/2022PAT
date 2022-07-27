@@ -78,7 +78,7 @@ public class StudentManager implements TableModel{
 
     // removes student from array using compare to method 
     public void deleteStudent(int row) throws SQLException {
-           String query = "DELETE FROM cutos.studentstbl WHERE `studentID` = " + studentArr[row].getStudentID();
+           String query = "DELETE FROM studentstbl WHERE `studentID` = " + studentArr[row].getStudentID();
         SystemManager.db.update(query);
                 this.shiftLeft(row);
 
@@ -89,34 +89,14 @@ public class StudentManager implements TableModel{
     // adds a student to array 
     public void addStudent(String idNumber, String firstname, String surname, String sClass, int grade, LocalDate dob) throws SQLException {
  
-        String query = "INSERT INTO cutos.studentstbl (`firstName`, surname, grade, `Class`, `IDNumber`, dob) VALUES ('" + firstname + "','" + surname + "'," + grade + ",'" + sClass  + "','" + idNumber + "','" + dob.toString() + "');"; 
-        System.out.println(query);
+        String query = "INSERT INTO studentstbl (`firstName`, surname, grade, `Class`, `IDNumber`, dob) VALUES ('" + firstname + "','" + surname + "'," + grade + ",'" + sClass  + "','" + idNumber + "','" + dob.toString() + "');"; 
+     
     SystemManager.db.update(query); 
 studentArr[size] = new Student(firstname, surname, idNumber, sClass, grade, dob); 
         size++; 
-     // studentArr[size] = new Student(firstname, surname, idNumber, sClass, grade, dob);
-       
-    
-        
-       
-
 
     }
-//  public Object[][] getStudentTableData() {
-//        Object[][] out = new Object[size][6];
-//        for (int row = 0; row < size; row++) {
-//
-//            out[row][0] = studentArr[row].getFirstname(); 
-//            out[row][1] = studentArr[row].getSurname(); 
-//            out[row][2] = studentArr[row].getGrade(); 
-//            out[row][3] = studentArr[row].getsClass();
-//            out[row][4] = studentArr[row].getIdNumber(); 
-//            out[row][5] = studentArr[row].getDob(); 
-//
-//        }
-//        return out;
-//
-//    }
+
 
     @Override
     public int getRowCount() {

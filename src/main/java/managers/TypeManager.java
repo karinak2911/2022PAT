@@ -45,7 +45,7 @@ public class TypeManager {
     
     
     public void addType(String typeName) throws SQLException{ 
-        String query = "INSERT INTO cutos.typetbl (`typeName`) VALUES ('" + typeName + "');";
+        String query = "INSERT INTO typetbl (`typeName`) VALUES ('" + typeName + "');";
         SystemManager.db.update(query); 
         typeArr[size] = new Type(size, typeName);
     size++; 
@@ -56,7 +56,7 @@ public class TypeManager {
             if(typeArr[i].getTypeName().equalsIgnoreCase(typeName))
                 this.shiftLeft(i);
         }
-        String query = "DELETE FROM cutos.typetbl WHERE `typeName` = '" + typeName + "';" ;
+        String query = "DELETE FROM typetbl WHERE `typeName` = '" + typeName + "';" ;
         SystemManager.db.update(query); 
 
     }

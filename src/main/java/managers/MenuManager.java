@@ -58,28 +58,16 @@ public class MenuManager implements TableModel {
         }
 
     }
-//       public Object[][] getMenuForTable() {
-//
-//        Object[][] out = new Object[size][3];
-//
-//        for (int row = 0; row < size; row++) {
-//
-//            out[row][0] = menuArr[row].getItemName();
-//            out[row][1] = menuArr[row].getItemType();
-//            out[row][2] = new Double(menuArr[row].getPrice());
-//        }
-//        return out;
-//    }
 
     public void add(String name, String type, double price) throws SQLException {
         String query2 = "SELECT `typeId` FROM typetbl WHERE `typeName` = '" + type + "';";
         ResultSet rs = SystemManager.db.query(query2);
-        System.out.println(query2);
+    
         int typeID = 0;
         rs.next();
         typeID = rs.getInt(1);
 
-        String query = " INSERT INTO cutos.menuitemtbl ( `itemName`, `typeID`, `itemPrice`) VALUES ( ' " + name + "' , '" + typeID + "'," + price + ");";
+        String query = " INSERT INTO menuitemtbl ( `itemName`, `typeID`, `itemPrice`) VALUES ( ' " + name + "' , '" + typeID + "'," + price + ");";
 
         SystemManager.db.update(query);
         menuArr[size] = new MenuItem(name, type, price);
@@ -88,7 +76,7 @@ public class MenuManager implements TableModel {
     }
 
     public void remove(int row) throws SQLException {
-        String query = "DELETE FROM cutos.menuitemtbl WHERE `itemID` = " + menuArr[row].getMenuItemID();
+        String query = "DELETE FROM menuitemtbl WHERE `itemID` = " + menuArr[row].getMenuItemID();
         SystemManager.db.update(query);
         this.shiftLeft(row);
 
